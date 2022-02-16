@@ -6,5 +6,9 @@ class HomeController < ApplicationController
     @ancUstValue = AncUstProvider.call()
     @lunaUstValue = LunaUstProvider.call()
     @osmoUstValue = OsmoUstProvider.call()
+
+    # @ancUstValue = 1234.23
+    # @lunaUstValue = 504.23
+    # @osmoUstValue = 1023.90
   end
 end
