@@ -25,10 +25,11 @@ class OsmoUstProvider < ApplicationService
       url =
         'https://lcd-osmosis.keplr.app/osmosis/lockup/v1beta1/account_locked_coins/osmo10l6e5ch3px3vavqgx5qmee82v0jhwl6wu6tt33'
       getBondedLPTokens = HTTParty.get(url).parsed_response
+      
+      pool = getBondedLPTokens['coins'].select { |pool| pool["denom"] == 'gamm/pool/560' }
+      bondedTokens = pool[0]['amount'].to_f / 1_000_000_000_000_000_000      
   
-      bondedTokens = getBondedLPTokens['coins'][0]['amount'].to_f / 1_000_000_000_000_000_000
-  
-      bondedTokens * lpTokenValue
+      bondedTokens * lpTokenValue    
     end
   end
   
