@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2022_02_19_112014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "coins", force: :cascade do |t|
+    t.string "coingecko_id"
+    t.string "symbol"
+    t.string "name"
+    t.float "price"
+    t.float "price_change_24h"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["coingecko_id"], name: "index_coins_on_coingecko_id", unique: true
+  end
 
 end
