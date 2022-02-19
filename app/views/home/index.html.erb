@@ -1,12 +1,16 @@
 <div class="w-9/12 mx-auto">
   <h1 class="font-bold text-4xl">Farmtime</h1>  
-
-  <h1 class="mt-4 font-bold text-2xl text-gray-700">ANC-UST  <div class="text-3xl text-blue-500"><%= number_to_currency(@ancUstValue.round(2)) %></div></h1>
-  <h1 class="mt-2 font-bold text-2xl text-gray-700">LUNA-UST  <div class="text-3xl text-blue-500"><%= number_to_currency(@lunaUstValue.round(2)) %></div></h1>
-  <h1 class="mt-2 font-bold text-2xl text-gray-700">OSMO-UST  <div class="text-3xl text-blue-500"><%= number_to_currency(@osmoUstValue.round(2)) %></div></h1>
-
-  <h1 class="mt-2 font-bold text-2xl text-gray-700">Late Quartet  <div class="text-3xl text-blue-500"><%= number_to_currency(@lateQuartetValue.round(2)) %></div></h1>
   
+  <h1 class="mt-2 font-bold text-2xl text-gray-700"><div class="flex">LUNA-UST 
+  <div class="flex ml-4 text-black"><%= image_tag 'luna.svg', width: '24', height: '24' %><div class="ml-2"></div>
+  <%= number_to_currency(@luna_price) %></div></div> <div class="text-3xl text-blue-500"><%= number_to_currency(@luna_ust_value.round(2)) %></div></h1>
 
+  <h1 class="mt-2 font-bold text-2xl text-gray-700"> <div class="flex">OSMO-UST 
+  <div class="flex ml-4 text-black"><%= image_tag 'osmosis.png', width: '30', height: '30' %>
+  <%= number_to_currency(@osmo_price) %></div></div> <div class="text-3xl text-blue-500"><%= number_to_currency(@osmo_ust_value.round(2)) %></div></h1>
+
+  <h1 class="mt-2 font-bold text-2xl text-gray-700">Late Quartet  <div class="text-3xl text-blue-500"><%= number_to_currency(@late_quartet_value.round(2)) %></div></h1>
+  
+  
   <%# <%= line_chart [["2021-01-01", 2], ["2021-01-02", 3], ["2021-01-03", 10]] %> 
 </div>
