@@ -1,0 +1,14 @@
+development:
+  :concurrency: 5
+production:
+  :concurrency: 10
+:queues:
+  - high
+  - default
+  - mailers
+
+:schedule:
+  get_coin_prices:
+    every: 5s
+    class: GetCoinPrices
+  
