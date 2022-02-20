@@ -10,7 +10,7 @@
   <%= number_to_currency(@osmo_price) %></div></div> <div class="text-3xl text-blue-500"><%= number_to_currency(@osmo_ust_value.round(2)) %></div></h1>
 
   <h1 class="mt-2 font-bold text-2xl text-gray-700">Late Quartet  <div class="text-3xl text-blue-500"><%= number_to_currency(@late_quartet_value.round(2)) %></div></h1>
-  
+  <%= render 'lp_card_group'%>
   
   <%# <%= line_chart [["2021-01-01", 2], ["2021-01-02", 3], ["2021-01-03", 10]] %> 
 </div>

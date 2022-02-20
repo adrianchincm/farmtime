@@ -1,0 +1,18 @@
+ 
+<div class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl">
+  <div class="p-5">
+    <div class="ml-2 mb-2 text-sm font-bold text-blue-500">Osmosis</div>
+    <div class="flex items-end">
+      <%= image_tag 'osmosis.png', width: '50', height: '50' %>
+      <%= image_tag 'ust.png', width: '50', height: '50' %>
+      <%# <div class="text-bottom">OSMO-UST</div> %>
+    </div>
+    <p class="my-2 font-bold text-2xl"><%= number_to_currency(@osmo_ust_value.round(2)) %></p>
+    <div class="flex text-sm leading-5 text-black">
+      <div class="text-gray-500">OSMO :</div>
+      &nbsp; 
+      <div class="font-bold"><%= number_to_currency(@osmo_price) %></div>
+    </div>
+  </div>
+  <div class="w-full h-1 ml-auto duration-300 origin-left transform scale-x-0 bg-deep-purple-accent-400 group-hover:scale-x-100"></div>
+</div>
