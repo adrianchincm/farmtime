@@ -16,5 +16,9 @@ class HomeController < ApplicationController
     @osmo_price = Coin.find_by(coingecko_id: 'osmosis')["price"]
     @luna_price = Coin.find_by(coingecko_id: 'terra-luna')["price"]
     @atom_price = Coin.find_by(coingecko_id: 'cosmos')["price"]
+
+    @btc_price = Coin.find_by(coingecko_id: 'bitcoin')["price"]
+    @eth_price = Coin.find_by(coingecko_id: 'ethereum')["price"]
+    @ftm_price = Coin.find_by(coingecko_id: 'fantom')["price"]
   end
 end
