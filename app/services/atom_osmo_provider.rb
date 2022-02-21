@@ -1,0 +1,35 @@
+# frozen_string_literal: true
+
+class OsmoUstProvider < ApplicationService
+    def initialize; end
+  
+    def call
+      url =
+        'https://api-osmosis.imperator.co/pools/v1/1'
+      getAtomOsmoLiquidity = HTTParty.get(url).parsed_response
+  
+      totalLiquidity = (getAtomOsmoLiquidity[0]['amount'] * getAtomOsmoLiquidity[0]['price']) + (getAtomOsmoLiquidity[1]['amount'] * getAtomOsmoLiquidity[1]['price'])
+  
+      ##############################################################################
+  
+      url =
+        'https://lcd-osmosis.keplr.app/osmosis/gamm/v1beta1/pools/1'
+      getAtomOsmoLiquidityLPSupply = HTTParty.get(url).parsed_response
+  
+      totalLpTokens = getAtomOsmoLiquidityLPSupply['pool']['totalShares']['amount'].to_f / 1_000_000_000_000_000_000
+  
+      lpTokenValue = totalLiquidity / totalLpTokens
+  
+      ##############################################################################
+  
+      url =
+        'https://lcd-osmosis.keplr.app/osmosis/lockup/v1beta1/account_locked_coins/osmo10l6e5ch3px3vavqgx5qmee82v0jhwl6wu6tt33'
+      getBondedLPTokens = HTTParty.get(url).parsed_response
+      
+      pool = getBondedLPTokens['coins'].select { |pool| pool["denom"] == 'gamm/pool/1' }
+      bondedTokens = pool[0]['amount'].to_f / 1_000_000_000_000_000_000      
+  
+      bondedTokens * lpTokenValue    
+    end
+  end
+  

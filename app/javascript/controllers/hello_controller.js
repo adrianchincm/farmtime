@@ -1,7 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  connect() {
-    this.element.textContent = "Hello World!"
+  showHideDetails(event) {
+    const element = event.currentTarget.querySelector("#details")
+    element.hidden = !element.hidden
   }
 }
