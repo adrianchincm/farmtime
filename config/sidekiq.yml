@@ -11,4 +11,7 @@ production:
   get_coin_prices:
     every: 5s
     class: GetCoinPrices
+  update_pools:
+    every: 10s
+    class: UpdatePools
   

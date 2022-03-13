@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LunaUstProvider < ApplicationService
+class LunaUstUpdater < ApplicationService
   def initialize; end
 
   def call
@@ -29,6 +29,9 @@ class LunaUstProvider < ApplicationService
     pool = getBondedLPTokens['coins'].select { |pool| pool["denom"] == 'gamm/pool/562' }
     bondedTokens = pool[0]['amount'].to_f / 1_000_000_000_000_000_000    
 
-    bondedTokens * lpTokenValue
+    luna_ust_value = bondedTokens * lpTokenValue
+    pool = Pool.find_by(tokens: ["terra-luna", "terrausd"])
+    pool.current_price = luna_ust_value
+    pool.save
   end
 end

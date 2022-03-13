@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class OsmoUstProvider < ApplicationService
+class AtomOsmoUpdater < ApplicationService
     def initialize; end
   
     def call
@@ -29,7 +29,10 @@ class OsmoUstProvider < ApplicationService
       pool = getBondedLPTokens['coins'].select { |pool| pool["denom"] == 'gamm/pool/1' }
       bondedTokens = pool[0]['amount'].to_f / 1_000_000_000_000_000_000      
   
-      bondedTokens * lpTokenValue    
+      atom_osmo_value = bondedTokens * lpTokenValue
+      pool = Pool.find_by(tokens: ["cosmos", "osmosis"])
+      pool.current_price = atom_osmo_value
+      pool.save
     end
   end
   

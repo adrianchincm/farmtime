@@ -7,7 +7,7 @@ class HomeController < ApplicationController
     # @osmo_ust_value = OsmoUstProvider.call() # initial amount : 975
     # @atom_osmo_value = OsmoUstProvider.call() # atom/osmo , initial amount : 575
 
-    @late_quartet_value = LateQuartetProvider.call() # initial amount : 236
+    @late_quartet_value = LateQuartetUpdater.call() # initial amount : 236
     
     @luna_ust_value = 504.23
     @osmo_ust_value = 1023.90
