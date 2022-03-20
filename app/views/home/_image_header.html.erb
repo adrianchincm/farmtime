@@ -1,0 +1,14 @@
+<div class="flex content-center items-end">
+  <% tokens.each do |token| %>
+    <% case token
+		   when "osmosis" %>
+    <%= image_tag 'osmosis.svg', width: '50', height: '50' %>
+    <% when "terra-luna" %>
+    <%= image_tag 'luna.svg', width: '50', height: '50' %>
+    <% when "cosmos" %>
+    <%= image_tag 'atom.svg', width: '50', height: '50' %>
+    <% when "terrausd" %>
+    <%= image_tag 'ust.png', width: '50', height: '50' %>
+  <% end %>
+<% end %>
+</div>

@@ -3,6 +3,8 @@ require "net/http"
 
 class HomeController < ApplicationController
   def index
+    @pools = Pool.all.sort_by(&:pool_owner)
+    
     @luna_ust_pool = Pool.find_by(name: "LUNA-UST")
     @luna_ust_value = Pool.find_by(name: "LUNA-UST").current_price # initial amount : 520 + 560 = 1070
     @osmo_ust_value = Pool.find_by(name: "OSMO-UST").current_price # initial amount : 975
