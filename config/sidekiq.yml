@@ -9,9 +9,9 @@ production:
 
 :schedule:
   get_coin_prices:
-    every: 5s
+    every: 60s
     class: GetCoinPrices
   update_pools:
-    every: 10s
+    every: 60s
     class: UpdatePools
   
