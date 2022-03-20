@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AtomOsmoUpdater < ApplicationService
+class OsmoUstUpdater < ApplicationService
     def initialize; end
   
     def call
