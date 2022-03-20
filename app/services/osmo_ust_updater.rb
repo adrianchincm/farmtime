@@ -31,7 +31,7 @@ class OsmoUstUpdater < ApplicationService
   
       osmo_ust_value = bondedTokens * lpTokenValue
 
-      pool = Pool.find_by(tokens: ["osmosis", "ust"])
+      pool = Pool.find_by(tokens: ["osmosis", "terrausd"])
       pool.current_price = osmo_ust_value
       pool.save
     end
