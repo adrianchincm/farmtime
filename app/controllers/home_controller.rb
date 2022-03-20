@@ -2,7 +2,8 @@ require "uri"
 require "net/http"
 
 class HomeController < ApplicationController
-  def index    
+  def index
+    @luna_ust_pool = Pool.find_by(name: "LUNA-UST")
     @luna_ust_value = Pool.find_by(name: "LUNA-UST").current_price # initial amount : 520 + 560 = 1070
     @osmo_ust_value = Pool.find_by(name: "OSMO-UST").current_price # initial amount : 975
     @atom_osmo_value = Pool.find_by(name: "ATOM-OSMO").current_price # atom/osmo , initial amount : 575

@@ -1,13 +1,13 @@
  
 <div class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl">
   <div class="p-5" data-action="click->hello#showHideDetails">
-    <div class="ml-2 mb-2 text-sm font-bold text-blue-500">Osmosis</div>
+    <div class="ml-2 mb-2 text-sm font-bold text-blue-500"><%= @luna_ust_pool.pool_owner %></div>
     <div class="flex items-end">
       <%= image_tag 'osmosis.png', width: '50', height: '50' %>
       <%= image_tag 'ust.png', width: '50', height: '50' %>
       <%# <div class="text-bottom">OSMO-UST</div> %>
     </div>
-    <p class="my-2 font-bold text-2xl"><%= number_to_currency(@osmo_ust_value.round(2)) %></p>
+    <p class="my-2 font-bold text-2xl"><%= number_to_currency(@luna_ust_pool.current_price.round(2)) %></p>
     <div class="flex text-sm leading-5 text-black">
       <div class="text-gray-500">OSMO :</div>
       &nbsp; 
