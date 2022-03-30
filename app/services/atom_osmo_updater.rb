@@ -5,7 +5,7 @@ class AtomOsmoUpdater < ApplicationService
   
     def call
       url =
-        'https://api-osmosis.imperator.co/pools/v1/1'
+        'https://api-osmosis.imperator.co/pools/v2/1'
       getAtomOsmoLiquidity = HTTParty.get(url).parsed_response
   
       totalLiquidity = (getAtomOsmoLiquidity[0]['amount'] * getAtomOsmoLiquidity[0]['price']) + (getAtomOsmoLiquidity[1]['amount'] * getAtomOsmoLiquidity[1]['price'])

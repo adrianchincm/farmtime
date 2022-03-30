@@ -5,7 +5,7 @@ class LunaUstUpdater < ApplicationService
 
   def call
     url =
-      'https://api-osmosis.imperator.co/pools/v1/562'
+      'https://api-osmosis.imperator.co/pools/v2/562'
     getLunaUstLiquidity = HTTParty.get(url).parsed_response
 
     totalLiquidity = (getLunaUstLiquidity[0]['amount'] * getLunaUstLiquidity[0]['price']) + getLunaUstLiquidity[1]['amount']
