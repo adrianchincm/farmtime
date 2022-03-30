@@ -1,0 +1,10 @@
+<div>
+  <% tokens.each do |token| %>
+    <% coin = Coin.find_by(coingecko_id: token) %>
+    <div class="flex text-sm leading-5 text-black">
+      <div class="text-gray-500"><%= coin.name %> : </div>
+      &nbsp; 
+      <div class="font-bold"><%= number_to_currency(coin.price) %></div>
+    </div>
+  <% end %>
+</div>
