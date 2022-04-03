@@ -1,1 +1,2 @@
 Pool.create(tokens: ["bitcoin", "ethereum"], name: "BTC-ETH", pool_owner: "Ref Finance", initial_capital: 100)
+Pool.create(tokens: ["wrapped-steth", "terrausd"], name: "STETH-UST", pool_owner: "Astroport", initial_capital: 800)

@@ -10,5 +10,6 @@ class UpdatePools
    AtomOsmoUpdater.call() # atom/osmo , initial amount : 575
    LateQuartetUpdater.call() # initial amount : 236
    BtcEthUpdater.call() # initial amount : 100
+   StethUstUpdater.call() # initial amount : 800
   end
 end

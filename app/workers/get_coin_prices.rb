@@ -5,22 +5,25 @@ class GetCoinPrices
 
   def perform
     query = {
-      "ids" => "bitcoin,ethereum,fantom,osmosis,terra-luna,cosmos,terrausd,usd-coin",
-      "vs_currencies" => "usd",
-      "include_24hr_change" => "true"
+      "ids" => "bitcoin,ethereum,fantom,osmosis,terra-luna,cosmos,terrausd,usd-coin,wrapped-steth",
+      "vs_currency" => "usd",      
     }
 
     url =
-    'https://api.coingecko.com/api/v3/simple/price'
+    'https://api.coingecko.com/api/v3/coins/markets'
     coinPrices = HTTParty.get(url, :query => query).parsed_response      
 
     coinArray = []
-    coinPrices.keys.each { |key|
-      coinPrices[key]["coingecko_id"] = key
-      coinPrices[key]["price"] = coinPrices[key]["usd"]
-      coinPrices[key]["price_change_24h"] = coinPrices[key]["usd_24h_change"]
-      coinArray << coinPrices[key].except("usd", "usd_24h_change")
-    }    
+
+    coinPrices.each { |coin|  
+      coin_model = {}
+      coin_model["coingecko_id"] = coin["id"]
+      coin_model["price"] = coin["current_price"]
+      coin_model["price_change_24h"] = coin["price_change_24h"]
+      coin_model["name"] = coin["name"]
+      coin_model["symbol"] = coin["symbol"].capitalize()
+      coinArray << coin_model
+    }
     
     Coin.upsert_all(coinArray, unique_by: :coingecko_id)
   end
