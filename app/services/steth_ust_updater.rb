@@ -26,7 +26,11 @@ class StethUstUpdater < ApplicationService
         
       # get staked pool value
       value_per_lp_token = pool_tvl / total_lp_tokens
+      puts "TOTAL LP TOKENS : #{total_lp_tokens}"
+      puts "POOL TVL : #{pool_tvl}"
+      puts "VALUE PER LP TOKEN : #{value_per_lp_token}"
       steth_ust_pool_value = user_lp_tokens * value_per_lp_token      
+      puts "POOL VALUE : #{steth_ust_pool_value}"
       
       pool = Pool.find_by(tokens: ["wrapped-steth", "terrausd"])
       pool.current_price = steth_ust_pool_value
