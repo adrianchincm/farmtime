@@ -9,5 +9,6 @@ class UpdatePools
    LunaUstUpdater.call() # initial amount : 520 + 560 = 1070
    AtomOsmoUpdater.call() # atom/osmo , initial amount : 575
    LateQuartetUpdater.call() # initial amount : 236
+   BtcEthUpdater.call() # initial amount : 100
   end
 end
