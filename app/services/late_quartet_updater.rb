@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 class LateQuartetUpdater < ApplicationService
-    def initialize; end
+  def initialize(address)
+    @address = address
+  end
   
     def call
       url =
-        'https://openapi.debank.com/v1/user/complex_protocol_list?id=0xF7865467a13B46c468B53e067533FacaE968FC3d&chain_id=ftm'
+        "https://openapi.debank.com/v1/user/complex_protocol_list?id=#{@address}&chain_id=ftm"
       getLateQuartet = HTTParty.get(url).parsed_response
 
       if (getLateQuartet[0]["id"] == "ftm_beefy")

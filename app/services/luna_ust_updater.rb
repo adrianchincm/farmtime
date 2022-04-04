@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class LunaUstUpdater < ApplicationService
-  def initialize; end
+  def initialize(address)
+    @address = address
+  end
 
   def call
     url =
@@ -23,7 +25,7 @@ class LunaUstUpdater < ApplicationService
     ##############################################################################
 
     url =
-      'https://lcd-osmosis.keplr.app/osmosis/lockup/v1beta1/account_locked_coins/osmo10l6e5ch3px3vavqgx5qmee82v0jhwl6wu6tt33'
+      "https://lcd-osmosis.keplr.app/osmosis/lockup/v1beta1/account_locked_coins/#{@address}"
     getBondedLPTokens = HTTParty.get(url).parsed_response
     
     pool = getBondedLPTokens['coins'].select { |pool| pool["denom"] == 'gamm/pool/562' }

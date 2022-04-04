@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_03_142356) do
+ActiveRecord::Schema.define(version: 2022_04_04_134808) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "hstore"
   enable_extension "plpgsql"
 
   create_table "coins", force: :cascade do |t|
@@ -42,6 +43,16 @@ ActiveRecord::Schema.define(version: 2022_04_03_142356) do
     t.string "pool_owner"
     t.float "current_price"
     t.float "initial_capital"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "portfolios", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "terra_address"
+    t.string "fantom_address"
+    t.string "osmosis_address"
+    t.text "ref_finance_shares"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

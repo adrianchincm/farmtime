@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class BtcEthUpdater < ApplicationService
-  def initialize; end
-
-  BTC_ETH_SHARES = 0.059490
+  def initialize(shares)
+    @shares = shares
+  end  
 
   def call
     url =
@@ -16,7 +16,7 @@ class BtcEthUpdater < ApplicationService
 
     lp_token_value = total_liquidity / shares_total_supply
 
-    pool_value = BTC_ETH_SHARES * lp_token_value
+    pool_value = @shares.to_f * lp_token_value
     pool = Pool.find_by(tokens: %w[bitcoin ethereum])
     pool.current_price = pool_value    
     pool.save
