@@ -1,14 +1,24 @@
 <div class="grid gap-2 grid-cols-4 items-center">
   <% tokens.each do |token| %>
     <% case token
-		   when "osmosis" %>
+		when "osmosis" %>    
     <%= image_tag 'osmosis.svg', width: '30', height: '30' %>
+    <% when "usd-coin" %>
+    <%= image_tag 'usdc.svg', width: '30', height: '30' %>
     <% when "terra-luna" %>
     <%= image_tag 'luna.svg', width: '30', height: '30' %>
     <% when "cosmos" %>
     <%= image_tag 'atom.svg', width: '30', height: '30' %>
     <% when "terrausd" %>
     <%= image_tag 'ust.png', width: '30', height: '30' %>
+    <% when "bitcoin" %>
+    <%= image_tag 'bitcoin.svg', width: '30', height: '30' %>
+    <% when "ethereum" %>
+    <%= image_tag 'ethereum.svg', width: '20', height: '20' %>
+    <% when "fantom" %>
+    <%= image_tag 'fantom.svg', width: '30', height: '30' %>
+    
+    
   <% end %>
 <% end %>
 </div>
