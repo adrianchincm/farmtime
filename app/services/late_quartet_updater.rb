@@ -12,7 +12,7 @@ class LateQuartetUpdater < ApplicationService
 
       if (getLateQuartet[0]["id"] == "ftm_beefy")
         lateQuarterValue = getLateQuartet[0]["portfolio_item_list"][0]["stats"]["asset_usd_value"]
-        pool = Pool.find_by(tokens: ["fantom", "bitcoin", "ethereum", "usd-coin"])
+        pool = Pool.find_by(tokens: ["usd-coin", "fantom", "bitcoin", "ethereum"])
         pool.current_price = lateQuarterValue
         pool.save
       end          
