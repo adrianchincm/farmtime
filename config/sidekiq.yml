@@ -14,5 +14,6 @@ production:
   update_pools:
     every: 60s
     class: UpdatePools
-  # snapshot_pool:
-  #   cron: "0 12 * * * Asia/Kuala_Lumpur"
+  snap_hourly:
+    every: 3 hours
+    class: SnapHourly  

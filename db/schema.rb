@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_04_134808) do
+ActiveRecord::Schema.define(version: 2022_04_08_145834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -29,9 +29,7 @@ ActiveRecord::Schema.define(version: 2022_04_04_134808) do
 
   create_table "pool_hourlies", force: :cascade do |t|
     t.integer "pool_id"
-    t.string "tokens", default: [], array: true
-    t.string "name"
-    t.string "pool_owner"
+    t.integer "portfolio_id"
     t.float "current_price"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -45,6 +43,7 @@ ActiveRecord::Schema.define(version: 2022_04_04_134808) do
     t.float "initial_capital"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "portfolio_id"
   end
 
   create_table "portfolios", force: :cascade do |t|
