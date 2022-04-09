@@ -18,5 +18,5 @@ production:
     every: 3 hours
     class: SnapHourly  
   snap_daily: 
-    cron: "1 0 * * *" // run 12:01am daily / 8:01am MYT
+    cron: "1 0 * * *"
     class: SnapDaily
