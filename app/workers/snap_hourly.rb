@@ -4,7 +4,7 @@ class SnapHourly
   include Sidekiq::Worker
 
   def perform()
-    portfolios = Portfolio.all
+    portfolios = Portfolio.where.not(name: "demo")
     portfolios.each do |portfolio|
       SnapHourlyFromPortfolioId.perform_async(portfolio.id)
     end    

@@ -4,7 +4,7 @@ class UpdatePools
   include Sidekiq::Worker
 
   def perform
-    portfolios = Portfolio.all
+    portfolios = Portfolio.where.not(name: "demo")
 
     portfolios.each { |portfolio|
       OsmoUstUpdater.call(portfolio.osmosis_address) # initial amount : 975
