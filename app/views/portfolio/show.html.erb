@@ -1,9 +1,13 @@
-<div class="w-9/12 mx-auto pt-8">
-</span>
-<h1 class="font-bold text-4xl">Farmtime</h1>
-
-
 <div class="relative px-4 py-8 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 h-screen">
+  <div class="flex items-end justify-between mb-8">
+    <div class="text-4xl font-bold text-black"><%= @portfolio.name %></div>
+    <div>
+      <div class="text-gray-500">Portfolio Total</div>
+      <div class="text-4xl font-bold text-blue-500">
+        <%= number_to_currency(@portfolio_total) %>
+      </div>
+    </div>
+  </div>
   <div class="absolute inset-x-0 top-0 items-center justify-center hidden overflow-hidden md:flex md:inset-y-0">
     <svg viewBox="0 0 88 88" class="w-full max-w-screen-xl text-indigo-100">
       <circle fill="currentColor" cx="44" cy="44" r="15.5"></circle>
@@ -13,12 +17,7 @@
       <circle fill-opacity="0.3" fill="currentColor" cx="44" cy="44" r="22.5"></circle>
     </svg>
   </div>
-  <div class="relative grid gap-5 pb-6 sm:grid-cols-2 lg:grid-cols-4">   
-   <%= render @pools %>    
+  <div class="relative grid gap-5 pb-6 sm:grid-cols-2 lg:grid-cols-4">
+    <%= render @pools %>
   </div>
-</div>
-
-
-
-<%# <%= line_chart @pool_hash %> %>
 </div>

@@ -7,12 +7,12 @@
   </div>
   
     <div class="flex items-end">
-      <%= render "image_header", tokens: pool.tokens %>
+      <%= render "components/image_header", tokens: pool.tokens %>
      
       <%# <div class="text-bottom">OSMO-UST</div> %>
     </div>
     <p class="my-2 font-bold text-2xl"><%= number_to_currency(pool.current_price.round(2)) %></p>
-      <%= render "pool_coin_prices", tokens: pool.tokens %>
+      <%= render "components/pool_coin_prices", tokens: pool.tokens %>
     <%# <div id="details">DETAILS DETAILS AND DETAILS</div> %>
   </div>
   
