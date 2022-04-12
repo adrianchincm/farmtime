@@ -1,63 +1,79 @@
-<div>Pool id <%= @pool_id %> and portfolio id <%= @portfolio_name %></div>
-<div>Previous close <%= @previous_daily %> PNL <%= @previous_daily_pnl %></div>
-
-<div class="px-4 py-6 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
-  <div class="grid row-gap-8 sm:grid-cols-3">
-    <div class="ml-6 mr-6 md:p-8 p-6 bg-gray-800 shadow-xl rounded-lg flex justify-between dark:bg-gray-800 md:items-center md:flex-row flex-col gap-6">      
-      <div>
-        <span class="text-bold text-gray-400 dark:text-gray-400 block">
-          Total Orders
-        </span>
-        <span class="text-blue-600 text-4xl md:text-5xl mt-2 font-black block">
-          1
-        </span>
+<div class="relative text-center px-4 py-8 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 h-screen">
+  <h3 class="text-lg leading-6 font-medium text-gray-900"><%= @pool.name %> Pool</h3>
+  <div class="flex items-center justify-center" x-data="{profit: <%= @previous_daily_pnl_amount >= 0 %>}">
+    <div class="text-blue-500 font-medium text-6xl"><%= number_to_currency(@pool.current_price) %></div>
+    <div class="ml-4">
+      <div class="flex items-center">
+        <i x-show="profit" class="fa-solid fa-caret-up text-green-500 text-4xl"></i>
+        <i x-show="!profit" class="fa-solid fa-caret-down text-red-500 text-4xl"></i>
+        <div class="ml-2 font-medium text-xl <%= @previous_daily_pnl_amount >= 0 ? "text-green-500" : "text-red-500" %>"><%= @previous_daily_pnl %>%</div>
       </div>
-      <div class="self-end">
-        <div class="text-xl text-gray-100 text-right md:block">          
-            23          
-        </div>
-        <p class="text-lg text-gray-400 md:text-right text-left dark:text-gray-400 md:block inline-block md:mb-0">
-          from last week
-        </p>
-      </div>
-    </div>
-
-    <div class="ml-6 mr-6 md:p-8 p-6 bg-gray-800 shadow-xl rounded-lg flex justify-between dark:bg-gray-800 md:items-center md:flex-row flex-col gap-6">      
-      <div>
-        <span class="text-bold text-gray-400 dark:text-gray-400 block">
-          Buy Orders Today
-        </span>
-        <span class="text-blue-600 text-4xl md:text-5xl mt-2 font-black block">
-          5
-        </span>
-      </div>
-      <div class="self-end">
-        <div class="text-xl text-gray-100 text-right md:block">        
-            6%%
-        </div>
-        <p class="text-lg text-gray-400 md:text-right text-left dark:text-gray-400 md:block inline-block md:mb-0">
-          from 7-day daily average (12)
-        </p>
-      </div>
-    </div>
-
-    <div class="ml-6 mr-6 md:p-8 p-6 bg-gray-800 shadow-xl rounded-lg flex justify-between dark:bg-gray-800 md:items-center md:flex-row flex-col gap-6">      
-      <div>
-        <span class="text-bold text-gray-400 dark:text-gray-400 block">
-          Sell Orders Today
-        </span>
-        <span class="text-blue-600 text-4xl md:text-5xl mt-2 font-black block">
-          14
-        </span>
-      </div>
-      <div class="self-end">
-        <div class="text-xl text-gray-100 text-right md:block">          
-            16%      
-        </div>
-        <p class="text-lg text-gray-400 md:text-right text-left dark:text-gray-400 md:block inline-block md:mb-0">
-          from 7-day daily average (3)
-        </p>
-      </div>
-    </div>
+      <div class="font-medium text-xl <%= @previous_daily_pnl_amount >= 0 ? "text-green-500" : "text-red-500" %>">(<%= number_to_currency(@previous_daily_pnl_amount) %>)</div>
+    </div>    
   </div>
+
+  <!-- This example requires Tailwind CSS v2.0+ -->
+<div>
+  
+  <dl class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow-md divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
+    <div class="px-4 py-5 sm:p-6">
+      <dt class="text-base font-normal text-gray-900">Total Subscribers</dt>
+      <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
+        <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
+          71,897
+          <span class="ml-2 text-sm font-medium text-gray-500"> from 70,946 </span>
+        </div>
+
+        <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
+          <!-- Heroicon name: solid/arrow-sm-up -->
+          <svg class="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+          <span class="sr-only"> Increased by </span>
+          12%
+        </div>
+      </dd>
+    </div>
+
+    <div class="px-4 py-5 sm:p-6">
+      <dt class="text-base font-normal text-gray-900">Avg. Open Rate</dt>
+      <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
+        <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
+          58.16%
+          <span class="ml-2 text-sm font-medium text-gray-500"> from 56.14% </span>
+        </div>
+
+        <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
+          <!-- Heroicon name: solid/arrow-sm-up -->
+          <svg class="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+          </svg>
+          <span class="sr-only"> Increased by </span>
+          2.02%
+        </div>
+      </dd>
+    </div>
+
+    <div class="px-4 py-5 sm:p-6">
+      <dt class="text-base font-normal text-gray-900">Avg. Click Rate</dt>
+      <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
+        <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
+          24.57%
+          <span class="ml-2 text-sm font-medium text-gray-500"> from 28.62% </span>
+        </div>
+
+        <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-red-100 text-red-800 md:mt-2 lg:mt-0">
+          <!-- Heroicon name: solid/arrow-sm-down -->
+          <svg class="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+          </svg>
+          <span class="sr-only"> Decreased by </span>
+          4.05%
+        </div>
+      </dd>
+    </div>
+  </dl>
+</div>
+
+  
 </div>
