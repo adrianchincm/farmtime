@@ -8,6 +8,15 @@ class PoolDetailsController < ApplicationController
         @previous_daily = PreviousDailyProvider.call(@pool_id, portfolio.id)
         @previous_daily_pnl = get_percentage_pnl(@previous_daily).round(2)
         @previous_daily_pnl_amount = get_pnl_amount(@previous_daily).round(2)
+
+        pool_dailies = PoolDaily.where(portfolio_id: portfolio.id, pool_id: @pool.id)
+
+        @pool_hash = Hash.new
+        pool_dailies.each { |daily|  
+          @pool_hash[daily.created_at] = daily.current_price      
+        }
+    
+        puts "POOL HASH #{@pool_hash}"
     end
 
     def get_percentage_pnl(previous_daily)
