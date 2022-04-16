@@ -20,6 +20,7 @@ class CoindixStatsUpdater < ApplicationService
 
       if !pool_stats
         Rake::Task['seed_pool_stats'].invoke
+        Rake::Task['seed_pools_with_coindix_id'].invoke        
       end
 
       @vaults.each do |vault|        
