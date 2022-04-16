@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_16_071346) do
+ActiveRecord::Schema.define(version: 2022_04_16_112423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(version: 2022_04_16_071346) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "portfolio_id"
+    t.integer "pool_stat_id"
   end
 
   create_table "portfolios", force: :cascade do |t|
