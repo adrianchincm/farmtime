@@ -5,7 +5,7 @@ class GetCoinPrices
 
   def perform
     query = {
-      "ids" => "bitcoin,ethereum,fantom,osmosis,terra-luna,cosmos,terrausd,usd-coin,wrapped-steth",
+      "ids" => "bitcoin,ethereum,fantom,osmosis,terra-luna,cosmos,terrausd,usd-coin,wrapped-steth,ref-finance",
       "vs_currency" => "usd",      
     }
 
