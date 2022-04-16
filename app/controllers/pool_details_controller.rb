@@ -1,4 +1,7 @@
 class PoolDetailsController < ApplicationController
+
+    helper_method :get_total_pnl_amount
+
     def show
         @portfolio_name = params[:portfolio_name]
         @pool_id = params[:pool_id]
@@ -16,7 +19,7 @@ class PoolDetailsController < ApplicationController
           @pool_hash[daily.created_at] = daily.current_price      
         }
     
-        puts "POOL HASH #{@pool_hash}"
+        @pool_stats = @pool.pool_stat
     end
 
     def get_percentage_pnl(previous_daily)
@@ -25,6 +28,10 @@ class PoolDetailsController < ApplicationController
 
     def get_pnl_amount(previous_daily)
         @pool.current_price - previous_daily
+    end
+
+    def get_total_pnl_amount
+        @pool.current_price - @pool.initial_capital
     end
     
 end

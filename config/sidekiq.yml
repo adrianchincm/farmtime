@@ -20,3 +20,6 @@ production:
   snap_daily: 
     cron: "1 0 * * *"
     class: SnapDaily
+  update_pool_stats:
+    every: 2 hours
+    class: UpdatePoolStats

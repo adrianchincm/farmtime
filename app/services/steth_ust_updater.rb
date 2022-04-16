@@ -31,7 +31,7 @@ class StethUstUpdater < ApplicationService
     
     steth_ust_pool_value = user_lp_tokens * value_per_lp_token          
     
-    pool = Pool.find_by(tokens: ["terrausd", "wrapped-steth"])
+    pool = Pool.find_by(tokens: ["wrapped-steth", "terrausd"])
     pool.current_price = steth_ust_pool_value
     pool.save     
   end

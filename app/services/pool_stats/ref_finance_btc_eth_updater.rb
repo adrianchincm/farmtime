@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 class RefFinanceBtcEthUpdater < ApplicationService
-    def initialize(shares)
-      @shares = shares
+    def initialize      
       @tokens_reward_per_week = 33544
       @tokens = %w[bitcoin ethereum]
       @pool_owner = "Ref Finance"
