@@ -4,6 +4,8 @@ class RefFinanceBtcEthUpdater < ApplicationService
     def initialize(shares)
       @shares = shares
       @tokens_reward_per_week = 33544
+      @tokens = %w[bitcoin ethereum]
+      @pool_owner = "Ref Finance"
     end  
   
     def call
@@ -18,8 +20,15 @@ class RefFinanceBtcEthUpdater < ApplicationService
       rewards_per_day = (@tokens_reward_per_week * ref_token_price) / 7
 
       apr = ((rewards_per_day / total_liquidity) * 365) * 100 # e.g 23.56
-      
-      
+
+      pool_stat = PoolStat.find_by(tokens: @tokens, pool_owner: @pool_owner)
+
+      if pool_stat
+        pool_stat.apr = apr
+        pool_stat.tvl = total_liquidity
+      else
+        PoolStat.create(tokens: @tokens, pool_owner: @pool_owner, apr: apr, tvl: total_liquidity)
+      end          
       
     end
   end

@@ -1,0 +1,2 @@
+class PoolStat < ApplicationRecord
+end
