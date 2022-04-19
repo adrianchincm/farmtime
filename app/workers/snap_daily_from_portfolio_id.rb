@@ -9,7 +9,7 @@ class SnapDailyFromPortfolioId
     pools.each do |pool|
         hourlies = PoolHourly.where(created_at: yesterday.beginning_of_day..yesterday.end_of_day, pool_id: pool.id)
         if hourlies.empty?
-          daily_average = Pool.find(pool_id: pool.id, portfolio_id: portfolio_id).current_price
+          daily_average = Pool.find_by(id: pool.id, portfolio_id: portfolio_id).current_price
         else
           daily_average = hourlies.sum(&:current_price) / hourlies.size
         end
