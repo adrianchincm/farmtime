@@ -1,6 +1,6 @@
 require 'sidekiq-scheduler'
 
-class UpdatePools
+class UpdatePoolStats
   include Sidekiq::Worker
 
   def perform
