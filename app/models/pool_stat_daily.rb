@@ -1,0 +1,2 @@
+class PoolStatDaily < ApplicationRecord
+end
