@@ -15,11 +15,11 @@ production:
     every: 60s
     class: UpdatePools
   snap_hourly:
-    every: 3 hours
-    class: SnapHourly  
-  snap_daily: 
+    cron: "0 */3 * * *"
+    class: SnapHourly
+  snap_daily:
     cron: "0 16 * * *"
     class: SnapDaily
   update_pool_stats:
-    every: 2 hours
+    cron: "0 */2 * * *"
     class: UpdatePoolStats
