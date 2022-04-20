@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class StethUstUpdater < ApplicationService
-  def initialize(address)
-    @address = address
+  def initialize(portfolio)
+    @portfolio = portfolio
   end
 
   def call
@@ -21,7 +21,7 @@ class StethUstUpdater < ApplicationService
     # get Total LP Tokens
     url =
       'https://hive.terra.dev/graphql'
-    get_user_lp_tokens = HTTParty.post(url, body: "{\"query\":\"{stakedterra1qz4cv5lsfw4k2266q52z9rtz64n58paxy9d476: wasm {\\n            contractQuery(\\n              contractAddress: \\\"terra1zgrx9jjqrfye8swykfgmd6hpde60j0nszzupp9\\\"\\n              query: {\\n                deposit: {\\n                  lp_token: \\\"terra1qz4cv5lsfw4k2266q52z9rtz64n58paxy9d476\\\"\\n                  user: \\\"#{@address}\\\"\\n                }\\n              }\\n            )\\n          }\\n}\",\"variables\":{}}",
+    get_user_lp_tokens = HTTParty.post(url, body: "{\"query\":\"{stakedterra1qz4cv5lsfw4k2266q52z9rtz64n58paxy9d476: wasm {\\n            contractQuery(\\n              contractAddress: \\\"terra1zgrx9jjqrfye8swykfgmd6hpde60j0nszzupp9\\\"\\n              query: {\\n                deposit: {\\n                  lp_token: \\\"terra1qz4cv5lsfw4k2266q52z9rtz64n58paxy9d476\\\"\\n                  user: \\\"#{@portfolio.terra_address}\\\"\\n                }\\n              }\\n            )\\n          }\\n}\",\"variables\":{}}",
     headers: { 'Content-Type' => 'application/json' }).parsed_response
 
     user_lp_tokens = get_user_lp_tokens["data"]["stakedterra1qz4cv5lsfw4k2266q52z9rtz64n58paxy9d476"]["contractQuery"].to_f / 1000000        
@@ -31,7 +31,7 @@ class StethUstUpdater < ApplicationService
     
     steth_ust_pool_value = user_lp_tokens * value_per_lp_token          
     
-    pool = Pool.find_by(tokens: ["wrapped-steth", "terrausd"])
+    pool = Pool.find_by(portfolio_id: @portfolio.id, tokens: ["wrapped-steth", "terrausd"])
     pool.current_price = steth_ust_pool_value
     pool.save     
   end

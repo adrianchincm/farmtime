@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class OsmoUstUpdater < ApplicationService
-    def initialize(address)
-      @address = address
+    def initialize(portfolio)
+      @portfolio = portfolio
     end
   
     def call
@@ -25,7 +25,7 @@ class OsmoUstUpdater < ApplicationService
       ##############################################################################
   
       url =
-        "https://lcd-osmosis.keplr.app/osmosis/lockup/v1beta1/account_locked_coins/#{@address}"
+        "https://lcd-osmosis.keplr.app/osmosis/lockup/v1beta1/account_locked_coins/#{@portfolio.osmosis_address}"
       getBondedLPTokens = HTTParty.get(url).parsed_response
       
       pool = getBondedLPTokens['coins'].select { |pool| pool["denom"] == 'gamm/pool/560' }
@@ -33,7 +33,7 @@ class OsmoUstUpdater < ApplicationService
   
       osmo_ust_value = bondedTokens * lpTokenValue
       
-      pool = Pool.find_by(tokens: ["osmosis", "terrausd"])
+      pool = Pool.find_by(portfolio_id: @portfolio.id, tokens: ["osmosis", "terrausd"])
       pool.current_price = osmo_ust_value
       pool.save
     end

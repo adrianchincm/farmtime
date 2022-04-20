@@ -17,9 +17,9 @@
       <div class="px-4 py-5 sm:p-6">
         <dt class="text-base font-normal text-gray-900">Total Value Locked</dt>
         <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
-          <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
+          <div class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600">
             <%= number_to_currency(@pool_stats.tvl, strip_insignificant_zeros: true) %>
-            <span class="ml-2 text-sm font-medium text-gray-500"> 7d: <%= number_to_currency(@pool_stats.tvl, strip_insignificant_zeros: true) %> </span>
+            <span class="text-sm font-medium text-gray-500"> 7-day average: <%= number_to_currency(@pool_stats.tvl, strip_insignificant_zeros: true) %> </span>
           </div>
           <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
             <!-- Heroicon name: solid/arrow-sm-up -->
@@ -34,9 +34,9 @@
       <div class="px-4 py-5 sm:p-6">
         <dt class="text-base font-normal text-gray-900">APY</dt>
         <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
-          <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
-            <%= @pool_stats.apr %>%
-            <span class="ml-2 text-sm font-medium text-gray-500"> 7-day average: 56.14% </span>
+          <div class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600">
+            <%= @pool_stats.apr.round(2) %>%
+            <span class="text-sm font-medium text-gray-500"> 7-day average: 56.14% </span>
           </div>
           <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
             <!-- Heroicon name: solid/arrow-sm-up -->
@@ -51,7 +51,7 @@
       <div class="px-4 py-5 sm:p-6">
         <dt class="text-base font-normal text-gray-900">Total P/L</dt>
         <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
-          <div class="flex items-baseline text-2xl font-semibold text-indigo-600">
+          <div class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600">
             <%= number_to_currency(get_total_pnl_amount) %>
             <span class="ml-2 text-sm font-medium text-gray-500"> from <%= number_to_currency(@pool.initial_capital) %> </span>
           </div>

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class LunaUstUpdater < ApplicationService
-  def initialize(address)
-    @address = address
+  def initialize(portfolio)
+    @portfolio = portfolio
   end
 
   def call
@@ -25,14 +25,14 @@ class LunaUstUpdater < ApplicationService
     ##############################################################################
 
     url =
-      "https://lcd-osmosis.keplr.app/osmosis/lockup/v1beta1/account_locked_coins/#{@address}"
+      "https://lcd-osmosis.keplr.app/osmosis/lockup/v1beta1/account_locked_coins/#{@portfolio.osmosis_address}"
     getBondedLPTokens = HTTParty.get(url).parsed_response
     
     pool = getBondedLPTokens['coins'].select { |pool| pool["denom"] == 'gamm/pool/562' }
     bondedTokens = pool[0]['amount'].to_f / 1_000_000_000_000_000_000    
 
     luna_ust_value = bondedTokens * lpTokenValue
-    pool = Pool.find_by(tokens: ["terra-luna", "terrausd"])
+    pool = Pool.find_by(portfolio_id: @portfolio.id, tokens: ["terra-luna", "terrausd"])
     pool.current_price = luna_ust_value
     pool.save
   end
