@@ -36,7 +36,7 @@
         <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
           <div class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600">
             <%= @pool_stats.apr.round(2) %>%
-            <span class="text-sm font-medium text-gray-500"> 7-day average: 56.14% </span>
+            <span class="text-sm font-medium text-gray-500"> 7-day average: <%= @pool_stats.apr.round(2) %>% </span>
           </div>
           <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
             <!-- Heroicon name: solid/arrow-sm-up -->
@@ -68,6 +68,17 @@
     </dl>
   </div>
   <div class="mt-8">
-    <%= area_chart @pool_hash, adapter: "highcharts" %>
+    <div class="text-2xl">Pool price</div>
+    <%= area_chart @pool_price_hash, adapter: "highcharts" %>
+  </div>
+
+  <div class="mt-8">
+    <div class="text-2xl">APY</div>
+    <%= area_chart @pool_apy_hash, adapter: "highcharts" %>
+  </div>
+
+  <div class="mt-8">
+    <div class="text-2xl">TVL</div>
+    <%= area_chart @pool_tvl_hash, adapter: "highcharts" %>
   </div>
 </div>

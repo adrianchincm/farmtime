@@ -8,7 +8,7 @@ task :seed_pool_stats_dailies => :environment do
         series = coindix_response["series"]
         
         series.each do |daily|
-            PoolStatDaily.create(name: coindix_response["name"], tvl: daily["tvl"], apy: daily["apy"], created_at: daily["date"])
+            PoolStatDaily.create(name: coindix_response["name"], tvl: daily["tvl"], apy: daily["apy"].to_f * 100, created_at: daily["date"], coindix_id: id)
         end
     end    
 end
