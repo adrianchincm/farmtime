@@ -4,7 +4,7 @@ class PoolDetailsController < ApplicationController
 
     def show        
         @chart_type = params[:chart] ||= "value"
-        @portfolio_name = params[:portfolio_name]
+        @portfolio_name = params[:name]
         @pool_id = params[:pool_id]
         portfolio = Portfolio.find_by(name: @portfolio_name)
 

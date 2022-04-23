@@ -1,5 +1,5 @@
  
-<div class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl">
+<a href="/portfolio/<%= @portfolio.name %>/pool/<%= pool.id %>" class="flex flex-col justify-between overflow-hidden text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl">
   <div class="p-5" data-action="click->hello#showHideDetails">
   <div class="flex">
     <div class="mb-2 text-sm font-bold text-black"><%= pool.name %></div>
@@ -7,14 +7,11 @@
   </div>
   
     <div class="flex items-end">
-      <%= render "components/image_header", tokens: pool.tokens %>
-     
-      <%# <div class="text-bottom">OSMO-UST</div> %>
+      <%= render "components/image_header", tokens: pool.tokens %>         
     </div>
     <p class="my-2 font-bold text-2xl"><%= number_to_currency(pool.current_price.round(2)) %></p>
-      <%= render "components/pool_coin_prices", tokens: pool.tokens %>
-    <%# <div id="details">DETAILS DETAILS AND DETAILS</div> %>
+      <%= render "components/pool_coin_prices", tokens: pool.tokens %>    
   </div>
   
   <div class="w-full h-1 ml-auto duration-300 origin-left transform scale-x-0 bg-deep-purple-accent-400 group-hover:scale-x-100"></div>
-</div>
+</a>

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   get 'portfolio/:name', to: 'portfolio#show'
-  get 'portfolio/:portfolio_name/pool/:pool_id', to: 'pool_details#show'
+  get 'portfolio/:name/pool/:pool_id', to: 'pool_details#show'
   mount Sidekiq::Web => "/sidekiq"
   root 'home#index'
 end
