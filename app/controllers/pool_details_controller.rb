@@ -2,7 +2,8 @@ class PoolDetailsController < ApplicationController
 
     helper_method :get_total_pnl_amount
 
-    def show
+    def show        
+        @chart_type = params[:chart] ||= "value"
         @portfolio_name = params[:portfolio_name]
         @pool_id = params[:pool_id]
         portfolio = Portfolio.find_by(name: @portfolio_name)
@@ -30,6 +31,7 @@ class PoolDetailsController < ApplicationController
         }
     
         @pool_stats = @pool.pool_stat
+        
     end
 
     def get_percentage_pnl(previous_daily)

@@ -67,18 +67,18 @@
       </div>
     </dl>
   </div>
-  <div class="mt-8">
-    <div class="text-2xl">Pool price</div>
-    <%= area_chart @pool_price_hash, adapter: "highcharts" %>
+  <div x-data="{}">    
+    <div id="tabs" @click="active_tab += 'wut'">
+      <%= render 'tab' %>
+    </div>
+    <div class="text-left mt-4 ml-4 text-2xl"><%= @pool.name %> Pool Historical Chart</div>
+    <div class="mt-8" x-show="'<%= @chart_type %>' == 'value'">      
+      <%= area_chart @pool_price_hash, adapter: "highcharts" %>
+    </div>
+    <div class="mt-8" x-show="'<%= @chart_type %>' == 'apy'">      
+      <%= area_chart @pool_apy_hash, adapter: "highcharts" %>
+    </div>
+    <div class="mt-8" x-show="'<%= @chart_type %>' == 'tvl'">      
+      <%= area_chart @pool_tvl_hash, adapter: "highcharts" %>
+    </div>
   </div>
-
-  <div class="mt-8">
-    <div class="text-2xl">APY</div>
-    <%= area_chart @pool_apy_hash, adapter: "highcharts" %>
-  </div>
-
-  <div class="mt-8">
-    <div class="text-2xl">TVL</div>
-    <%= area_chart @pool_tvl_hash, adapter: "highcharts" %>
-  </div>
-</div>
