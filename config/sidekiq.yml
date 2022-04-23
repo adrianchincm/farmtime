@@ -23,3 +23,6 @@ production:
   update_pool_stats:
     cron: "0 */2 * * *"
     class: UpdatePoolStats
+  update_pool_stat_daily:
+    cron: "0 2 * * *"
+    class: UpdatePoolStatDaily

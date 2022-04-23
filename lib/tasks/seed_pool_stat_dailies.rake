@@ -1,6 +1,6 @@
 desc 'Seed pool stat dailies from coindix'
 task :seed_pool_stats_dailies => :environment do
-    coindix_ids = %w[41149 41178 41180 55832 16745]    
+    coindix_ids = PoolStat::VAULTS
     coindix_ids.each do |id|
         
         url = "https://api.coindix.com/vaults/#{id}?period=365"        
