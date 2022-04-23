@@ -25,6 +25,7 @@ class RefFinanceBtcEthUpdater < ApplicationService
       if pool_stat
         pool_stat.apr = apr
         pool_stat.tvl = total_liquidity
+        pool_stat.save
       else
         PoolStat.create(tokens: @tokens, pool_owner: @pool_owner, apr: apr, tvl: total_liquidity)
       end          
