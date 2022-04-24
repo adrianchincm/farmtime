@@ -14,8 +14,7 @@ class PoolDetailsController < ApplicationController
         @previous_daily_pnl_amount = get_pnl_amount(@previous_daily).round(2)
 
         pool_dailies = PoolDaily.where(portfolio_id: portfolio.id, pool_id: @pool.id)
-        pool_coindix_id = @pool.pool_stat.coindix_id
-        pool_stat_dailies = PoolStatDaily.where(coindix_id: pool_coindix_id)
+       
 
         @pool_price_hash = Hash.new
         @pool_apy_hash = Hash.new
@@ -25,11 +24,8 @@ class PoolDetailsController < ApplicationController
           @pool_price_hash[daily.created_at] = daily.current_price      
         }
 
-        pool_stat_dailies.each { |daily|
-            @pool_apy_hash[daily.created_at] = "#{daily.apy}%"
-            @pool_tvl_hash[daily.created_at] = daily.tvl
-        }
-    
+        get_tvl_apr_hash()
+           
         @pool_stats = @pool.pool_stat
         
     end
@@ -44,6 +40,21 @@ class PoolDetailsController < ApplicationController
 
     def get_total_pnl_amount
         @pool.current_price - @pool.initial_capital
+    end
+
+    def get_tvl_apr_hash
+        if @pool.pool_stat.coindix_id.nil?            
+            pool_farmtime_id = @pool.pool_stat.farmtime_id
+            pool_stat_dailies = PoolStatDaily.where(farmtime_id: pool_farmtime_id)
+        else
+            pool_coindix_id = @pool.pool_stat.coindix_id
+            pool_stat_dailies = PoolStatDaily.where(coindix_id: pool_coindix_id)  
+        end
+
+        pool_stat_dailies.each { |daily|
+            @pool_apy_hash[daily.created_at] = "#{daily.apy}%"
+            @pool_tvl_hash[daily.created_at] = daily.tvl
+        }
     end
     
 end

@@ -4,6 +4,7 @@ class UpdatePoolStatDaily
   include Sidekiq::Worker
 
   def perform
-    CoindixPoolStatDailyUpdater.call()    
+    CoindixPoolStatDailyUpdater.call()
+    NonCoindixPoolStatDailyUpdater.call()
   end
 end
