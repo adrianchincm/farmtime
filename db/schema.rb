@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_24_033258) do
+ActiveRecord::Schema.define(version: 2022_04_24_131117) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -62,6 +62,8 @@ ActiveRecord::Schema.define(version: 2022_04_24_033258) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "farmtime_id"
+    t.float "apy_7d_average"
+    t.float "tvl_7d_average"
   end
 
   create_table "pools", force: :cascade do |t|

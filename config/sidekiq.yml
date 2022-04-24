@@ -26,3 +26,6 @@ production:
   update_pool_stat_daily:
     cron: "0 2 * * *"
     class: UpdatePoolStatDaily
+  snap_seven_day_average:
+    cron: "0 16 * * *"  
+    class: SnapSevenDayAverage

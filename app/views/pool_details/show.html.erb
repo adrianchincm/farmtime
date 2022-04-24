@@ -16,22 +16,20 @@
     </div>
   </div>
   <!-- This example requires Tailwind CSS v2.0+ -->
-  <div>
+  <div x-data>
     <dl class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow-md divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
       <div class="px-4 py-5 sm:p-6">
         <dt class="text-base font-normal text-gray-900">Total Value Locked</dt>
         <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
           <div class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600">
             <%= number_to_currency(@pool_stats.tvl, strip_insignificant_zeros: true) %>
-            <span class="text-sm font-medium text-gray-500"> 7-day average: <%= number_to_currency(@pool_stats.tvl, strip_insignificant_zeros: true) %> </span>
+            <span class="text-sm font-medium text-gray-500"> 7-day average: <%= number_to_currency(@pool_stats.tvl_7d_average, strip_insignificant_zeros: true) %> </span>
           </div>
-          <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
-            <!-- Heroicon name: solid/arrow-sm-up -->
-            <svg class="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-            </svg>
-            <span class="sr-only"> Increased by </span>
-            12%
+          <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm <%= @tvl_7d_pnl_percentage >= 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800" %> font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">                                
+              <i x-cloak x-show="<%= @tvl_7d_pnl_percentage %> >= 0" class="fa-solid fa-arrow-up text-green-500 mr-1"></i>
+              <i x-cloak x-show="<%= @tvl_7d_pnl_percentage %> < 0" class="fa-solid fa-arrow-down text-red-500 mr-1"></i>
+              <span class="sr-only"> Increased by </span>
+              <%= @tvl_7d_pnl_percentage.round(2) %>%
           </div>
         </dd>
       </div>
@@ -40,15 +38,13 @@
         <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
           <div class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600">
             <%= @pool_stats.apr.round(2) %>%
-            <span class="text-sm font-medium text-gray-500"> 7-day average: <%= @pool_stats.apr.round(2) %>% </span>
+            <span class="text-sm font-medium text-gray-500"> 7-day average: <%= @pool_stats.apy_7d_average.round(2) %>% </span>
           </div>
-          <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
-            <!-- Heroicon name: solid/arrow-sm-up -->
-            <svg class="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-            </svg>
+          <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium <%= @apy_7d_pnl_percentage >= 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800" %> md:mt-2 lg:mt-0">          
+            <i x-cloak x-show="<%= @apy_7d_pnl_percentage %> >= 0" class="fa-solid fa-arrow-up text-green-500 mr-1"></i>
+            <i x-cloak x-show="<%= @apy_7d_pnl_percentage %> < 0" class="fa-solid fa-arrow-down text-red-500 mr-1"></i>
             <span class="sr-only"> Increased by </span>
-            2.02%
+            <%= @apy_7d_pnl_percentage.round(2) %>%
           </div>
         </dd>
       </div>
@@ -59,20 +55,18 @@
             <%= number_to_currency(get_total_pnl_amount) %>
             <span class="ml-2 text-sm font-medium text-gray-500"> from <%= number_to_currency(@pool.initial_capital) %> </span>
           </div>
-          <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium bg-red-100 text-red-800 md:mt-2 lg:mt-0">
-            <!-- Heroicon name: solid/arrow-sm-down -->
-            <svg class="-ml-1 mr-0.5 flex-shrink-0 self-center h-5 w-5 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-            </svg>
+          <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium <%= get_total_pnl_amount >= 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800" %>  md:mt-2 lg:mt-0">
+            <i x-cloak x-show="<%= @total_pnl_percentage %> >= 0" class="fa-solid fa-arrow-up text-green-500 mr-1"></i>
+            <i x-cloak x-show="<%= @total_pnl_percentage %> < 0" class="fa-solid fa-arrow-down text-red-500 mr-1"></i>
             <span class="sr-only"> Decreased by </span>
-            4.05%
+            <%= @total_pnl_percentage.round(2) %>%
           </div>
         </dd>
       </div>
     </dl>
   </div>
   <div x-data="{}">    
-    <div id="tabs" @click="active_tab += 'wut'">
+    <div id="tabs">
       <%= render 'tab' %>
     </div>
     <div class="text-left mt-4 ml-4 text-2xl"><%= @pool.name %> Pool Historical Chart</div>

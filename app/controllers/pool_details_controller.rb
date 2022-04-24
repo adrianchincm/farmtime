@@ -15,7 +15,6 @@ class PoolDetailsController < ApplicationController
 
         pool_dailies = PoolDaily.where(portfolio_id: portfolio.id, pool_id: @pool.id)
        
-
         @pool_price_hash = Hash.new
         @pool_apy_hash = Hash.new
         @pool_tvl_hash = Hash.new
@@ -27,7 +26,9 @@ class PoolDetailsController < ApplicationController
         get_tvl_apr_hash()
            
         @pool_stats = @pool.pool_stat
-        
+        @apy_7d_pnl_percentage = pnl_percentage_apy_7d_average()
+        @tvl_7d_pnl_percentage = pnl_percentage_tvl_7d_average()
+        @total_pnl_percentage = pnl_percentage_total()
     end
 
     def get_percentage_pnl(previous_daily)
@@ -55,6 +56,18 @@ class PoolDetailsController < ApplicationController
             @pool_apy_hash[daily.created_at] = "#{daily.apy}%"
             @pool_tvl_hash[daily.created_at] = daily.tvl
         }
+    end
+
+    def pnl_percentage_apy_7d_average
+        ((@pool_stats.apr - @pool_stats.apy_7d_average)/@pool_stats.apr) * 100
+    end
+
+    def pnl_percentage_tvl_7d_average
+        ((@pool_stats.tvl - @pool_stats.tvl_7d_average)/@pool_stats.tvl) * 100
+    end
+
+    def pnl_percentage_total
+        ((@pool.current_price - @pool.initial_capital)/@pool.current_price) * 100
     end
     
 end
