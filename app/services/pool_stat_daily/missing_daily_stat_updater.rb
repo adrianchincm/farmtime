@@ -2,12 +2,12 @@
 
 class MissingDailyStatUpdater < ApplicationService  
     def initialize(coindix_id)
-        @coindix_id = coindix_id      
+        @coindix_id = coindix_id
     end
   
-    def call        
-        latest_pool_stat = PoolStatDaily.where(coindix_id: @coindix_id[:coindix_id]).last
-        latest_pool_stat.created_at = DateTime.parse("2022-04-23T02:0:00.000Z")
+    def call
+        puts "COINDIX ID : #{@coindix_id}"
+        latest_pool_stat = PoolStatDaily.where(coindix_id: @coindix_id[:coindix_id]).last        
 
         url = "https://api.coindix.com/vaults/#{@coindix_id[:coindix_id]}?period=365"        
         coindix_response = HTTParty.get(url, headers: { "Authorization" => "Bearer #{Figaro.env.coindix_bearer_token}", "User-Agent" => "PostmanRuntime/7.29.0" }).parsed_response
