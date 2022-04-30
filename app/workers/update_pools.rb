@@ -13,6 +13,7 @@ class UpdatePools
       LateQuartetUpdater.call(portfolio) # initial amount : 236
       BtcEthUpdater.call(portfolio) # initial amount : 100
       StethUstUpdater.call(portfolio) # initial amount : 800
+      StethUstSpecFinanceUpdater.call(portfolio) # initial amount : 800
     }
   end
 end
