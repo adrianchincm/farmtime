@@ -6,5 +6,6 @@ class UpdatePoolStats
   def perform
     CoindixStatsUpdater.call()
     RefFinanceBtcEthUpdater.call()
+    SpectrumFinanceWstethUstUpdater.call()
   end
 end
