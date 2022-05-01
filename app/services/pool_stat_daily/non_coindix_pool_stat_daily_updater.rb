@@ -7,6 +7,7 @@ class NonCoindixPoolStatDailyUpdater < ApplicationService
   
     def call
         RefFinancePoolStatDailyUpdater.call()
+        SpectrumFinancePoolStatDailyUpdater.call()
     end
   end
   
