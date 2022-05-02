@@ -12,9 +12,14 @@ class SnapSevenDayAverage
         else
             pool_stat_dailies = PoolStatDaily.last_7_days.where(coindix_id: pool_stat.coindix_id)
         end
-                
-        pool_stat.tvl_7d_average = pool_stat_dailies.sum(&:tvl) / pool_stat_dailies.size
-        pool_stat.apy_7d_average = pool_stat_dailies.sum(&:apy) / pool_stat_dailies.size
+        
+        if pool_stat_dailies.empty?
+          pool_stat.tvl_7d_average = pool_stat.tvl
+          pool_stat.apy_7d_average = pool_stat.apr
+        else
+          pool_stat.tvl_7d_average = pool_stat_dailies.sum(&:tvl) / pool_stat_dailies.size
+          pool_stat.apy_7d_average = pool_stat_dailies.sum(&:apy) / pool_stat_dailies.size
+        end        
         pool_stat.save
     end
   end
