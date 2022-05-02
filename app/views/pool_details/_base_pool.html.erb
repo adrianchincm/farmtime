@@ -1,0 +1,7 @@
+<div class="bg-blue-100 text-blue-800 rounded-lg p-4">
+  <dt class="text-base font-medium text-blue-800 underline">Base Pool <%= title %></dt>
+  <dd class="mt-1 text-left items-baseline font-medium">    
+    <div class="text-2xl font-semibold"><%=  title == "APY" ? "#{main_value.round(2)}%" : "#{number_to_currency(main_value)}" %></div>
+    <div class="text-sm font-medium text-blue-500">7-day average: <%= title == "APY" ? "#{average_value.round(2)}%" : "#{number_to_currency(average_value)}" %></div>
+  </dd>
+</div>

@@ -32,6 +32,9 @@
               <%= @tvl_7d_pnl_percentage.round(2) %>%
           </div>
         </dd>
+        <div class="mt-4">     
+          <%= render 'base_pool', title: 'TVL', main_value: 25690348, average_value: 25490384 %>
+        </div>
       </div>
       <div class="px-4 py-5 sm:p-6">
         <dt class="text-base font-normal text-gray-900">APY</dt>
@@ -45,8 +48,11 @@
             <i x-cloak x-show="<%= @apy_7d_pnl_percentage %> < 0" class="fa-solid fa-arrow-down text-red-500 mr-1"></i>
             <span class="sr-only"> Increased by </span>
             <%= @apy_7d_pnl_percentage.round(2) %>%
-          </div>
+          </div>          
         </dd>
+        <div class="mt-4">     
+          <%= render 'base_pool', title: 'APY', main_value: 25.67, average_value: 23.57 %>
+        </div>
       </div>
       <div class="px-4 py-5 sm:p-6">
         <dt class="text-base font-normal text-gray-900">Total P/L</dt>
