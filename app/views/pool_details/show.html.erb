@@ -1,4 +1,4 @@
-<div class="relative text-center px-4 py-8 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 h-screen">
+<div x-data="{ show_base_pool: false }" class="relative text-center px-4 py-8 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 h-screen">
   <a href="/portfolio/<%= @portfolio_name %>" class="flex mb-4 sm:mb-0 text-left text-blue-800 text-l items-center ">
     <i class="fa-solid fa-arrow-left-long"></i>
     <div class="ml-2 hover:underline">Back to portfolio</div>
@@ -15,7 +15,18 @@
       <div class="font-medium text-xl <%= @previous_daily_pnl_amount >= 0 ? "text-green-500" : "text-red-500" %>">(<%= number_to_currency(@previous_daily_pnl_amount) %>)</div>
     </div>
   </div>
-  <!-- This example requires Tailwind CSS v2.0+ -->
+  <% unless @base_pool_stats.nil? %>
+  <div class="flex justify-between mt-4 bg-blue-100 text-blue-800 rounded-lg p-4 md:w-1/4 w-full sm:mx-auto m-0">
+    <div>Show Base Pool Stats</div>
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <!-- Enabled: "bg-indigo-600", Not Enabled: "bg-gray-200" -->
+    <button role="switch" @click="show_base_pool = !show_base_pool" x-state:on="Enabled" x-state:off="Not Enabled" type="button" :class="[show_base_pool ? 'bg-blue-500' : 'bg-gray-400']"
+    class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" role="switch" aria-checked="false">      
+      <!-- Enabled: "translate-x-5", Not Enabled: "translate-x-0" -->
+      <span aria-hidden="true" :class="[show_base_pool ? 'translate-x-5' : 'translate-x-0']" class="pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform ring-0 transition ease-in-out duration-200"></span>
+    </button>
+  </div>
+  <% end %>
   <div x-data>
     <dl class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow-md divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
       <div class="px-4 py-5 sm:p-6">
@@ -25,16 +36,18 @@
             <%= number_to_currency(@pool_stats.tvl, strip_insignificant_zeros: true) %>
             <span class="text-sm font-medium text-gray-500"> 7-day average: <%= number_to_currency(@pool_stats.tvl_7d_average, strip_insignificant_zeros: true) %> </span>
           </div>
-          <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm <%= @tvl_7d_pnl_percentage >= 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800" %> font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">                                
-              <i x-cloak x-show="<%= @tvl_7d_pnl_percentage %> >= 0" class="fa-solid fa-arrow-up text-green-500 mr-1"></i>
-              <i x-cloak x-show="<%= @tvl_7d_pnl_percentage %> < 0" class="fa-solid fa-arrow-down text-red-500 mr-1"></i>
-              <span class="sr-only"> Increased by </span>
-              <%= @tvl_7d_pnl_percentage.round(2) %>%
+          <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm <%= @tvl_7d_pnl_percentage >= 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800" %> font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
+            <i x-cloak x-show="<%= @tvl_7d_pnl_percentage %> >= 0" class="fa-solid fa-arrow-up text-green-500 mr-1"></i>
+            <i x-cloak x-show="<%= @tvl_7d_pnl_percentage %> < 0" class="fa-solid fa-arrow-down text-red-500 mr-1"></i>
+            <span class="sr-only"> Increased by </span>
+            <%= @tvl_7d_pnl_percentage.round(2) %>%
           </div>
         </dd>
-        <div class="mt-4">     
-          <%= render 'base_pool', title: 'TVL', main_value: 25690348, average_value: 25490384 %>
+        <% unless @base_pool_stats.nil? %>
+        <div class="mt-4" x-show="show_base_pool">
+          <%= render 'base_pool', title: 'TVL', main_value: @base_pool_stats.tvl, average_value: @base_pool_stats.tvl_7d_average %>
         </div>
+        <% end %>
       </div>
       <div class="px-4 py-5 sm:p-6">
         <dt class="text-base font-normal text-gray-900">APY</dt>
@@ -43,16 +56,18 @@
             <%= @pool_stats.apr.round(2) %>%
             <span class="text-sm font-medium text-gray-500"> 7-day average: <%= @pool_stats.apy_7d_average.round(2) %>% </span>
           </div>
-          <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium <%= @apy_7d_pnl_percentage >= 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800" %> md:mt-2 lg:mt-0">          
+          <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium <%= @apy_7d_pnl_percentage >= 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800" %> md:mt-2 lg:mt-0">
             <i x-cloak x-show="<%= @apy_7d_pnl_percentage %> >= 0" class="fa-solid fa-arrow-up text-green-500 mr-1"></i>
             <i x-cloak x-show="<%= @apy_7d_pnl_percentage %> < 0" class="fa-solid fa-arrow-down text-red-500 mr-1"></i>
             <span class="sr-only"> Increased by </span>
             <%= @apy_7d_pnl_percentage.round(2) %>%
-          </div>          
+          </div>
         </dd>
-        <div class="mt-4">     
-          <%= render 'base_pool', title: 'APY', main_value: 25.67, average_value: 23.57 %>
+        <% unless @base_pool_stats.nil? %>
+        <div class="mt-4" x-show="show_base_pool">
+          <%= render 'base_pool', title: 'APY', main_value: @base_pool_stats.apr, average_value: @base_pool_stats.apy_7d_average %>
         </div>
+        <% end %>
       </div>
       <div class="px-4 py-5 sm:p-6">
         <dt class="text-base font-normal text-gray-900">Total P/L</dt>
@@ -71,18 +86,18 @@
       </div>
     </dl>
   </div>
-  <div x-data="{}">    
+  <div x-data="{}">
     <div id="tabs">
       <%= render 'tab' %>
     </div>
     <div class="text-left mt-4 ml-4 text-2xl"><%= @pool.name %> Pool Historical Chart</div>
-    <div class="mt-8" x-show="'<%= @chart_type %>' == 'value'">      
+    <div class="mt-8" x-show="'<%= @chart_type %>' == 'value'">
       <%= area_chart @pool_price_hash, adapter: "highcharts" %>
     </div>
-    <div class="mt-8" x-show="'<%= @chart_type %>' == 'apy'">      
+    <div class="mt-8" x-show="'<%= @chart_type %>' == 'apy'">
       <%= area_chart @pool_apy_hash, adapter: "highcharts" %>
     </div>
-    <div class="mt-8" x-show="'<%= @chart_type %>' == 'tvl'">      
+    <div class="mt-8" x-show="'<%= @chart_type %>' == 'tvl'">
       <%= area_chart @pool_tvl_hash, adapter: "highcharts" %>
     </div>
   </div>
