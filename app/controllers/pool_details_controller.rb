@@ -59,8 +59,7 @@ class PoolDetailsController < ApplicationController
     if !@pool.vault_provider.nil?
       pool_farmtime_id = PoolStat.find_by(tokens: @pool.tokens, vault_provider: @pool.vault_provider).farmtime_id
       pool_stat_dailies = PoolStatDaily.where(farmtime_id: pool_farmtime_id)
-      check_for_base_pool_stat_dailies
-      
+      check_for_base_pool_stat_dailies      
     elsif @pool.pool_stat.coindix_id.nil?
       pool_farmtime_id = @pool.pool_stat.farmtime_id
       pool_stat_dailies = PoolStatDaily.where(farmtime_id: pool_farmtime_id)

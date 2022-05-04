@@ -1,0 +1,59 @@
+<div x-data>
+  <dl class="mt-5 grid grid-cols-1 rounded-lg bg-white overflow-hidden shadow-md divide-y divide-gray-200 md:grid-cols-3 md:divide-y-0 md:divide-x">
+    <div class="px-4 py-5 sm:p-6">
+      <dt class="text-base font-normal text-gray-900">Total Value Locked</dt>
+      <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
+        <div class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600">
+          <%= number_to_currency(@pool_stats.tvl, strip_insignificant_zeros: true) %>
+          <span class="text-sm font-medium text-gray-500"> 7-day average: <%= number_to_currency(@pool_stats.tvl_7d_average, strip_insignificant_zeros: true) %> </span>
+        </div>
+        <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm <%= @tvl_7d_pnl_percentage >= 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800" %> font-medium bg-green-100 text-green-800 md:mt-2 lg:mt-0">
+          <i x-cloak x-show="<%= @tvl_7d_pnl_percentage %> >= 0" class="fa-solid fa-arrow-up text-green-500 mr-1"></i>
+          <i x-cloak x-show="<%= @tvl_7d_pnl_percentage %> < 0" class="fa-solid fa-arrow-down text-red-500 mr-1"></i>
+          <span class="sr-only"> Increased by </span>
+          <%= @tvl_7d_pnl_percentage.round(2) %>%
+        </div>
+      </dd>
+      <% unless @base_pool_stats.nil? %>
+        <div class="mt-4" x-show="show_base_pool">
+          <%= render 'base_pool', title: 'TVL', main_value: @base_pool_stats.tvl, average_value: @base_pool_stats.tvl_7d_average %>
+        </div>
+      <% end %>
+    </div>
+    <div class="px-4 py-5 sm:p-6">
+      <dt class="text-base font-normal text-gray-900">APY</dt>
+      <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
+        <div class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600">
+          <%= @pool_stats.apr.round(2) %>%
+          <span class="text-sm font-medium text-gray-500"> 7-day average: <%= @pool_stats.apy_7d_average.round(2) %>% </span>
+        </div>
+        <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium <%= @apy_7d_pnl_percentage >= 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800" %> md:mt-2 lg:mt-0">
+          <i x-cloak x-show="<%= @apy_7d_pnl_percentage %> >= 0" class="fa-solid fa-arrow-up text-green-500 mr-1"></i>
+          <i x-cloak x-show="<%= @apy_7d_pnl_percentage %> < 0" class="fa-solid fa-arrow-down text-red-500 mr-1"></i>
+          <span class="sr-only"> Increased by </span>
+          <%= @apy_7d_pnl_percentage.round(2) %>%
+        </div>
+      </dd>
+      <% unless @base_pool_stats.nil? %>
+        <div class="mt-4" x-show="show_base_pool">
+          <%= render 'base_pool', title: 'APY', main_value: @base_pool_stats.apr, average_value: @base_pool_stats.apy_7d_average %>
+        </div>
+      <% end %>
+    </div>
+    <div class="px-4 py-5 sm:p-6">
+      <dt class="text-base font-normal text-gray-900">Total P/L</dt>
+      <dd class="mt-1 flex justify-between items-baseline md:block lg:flex">
+        <div class="flex flex-col items-baseline text-2xl font-semibold text-indigo-600">
+          <%= number_to_currency(get_total_pnl_amount) %>
+          <span class="ml-2 text-sm font-medium text-gray-500"> from <%= number_to_currency(@pool.initial_capital) %> </span>
+        </div>
+        <div class="inline-flex items-baseline px-2.5 py-0.5 rounded-full text-sm font-medium <%= get_total_pnl_amount >= 0 ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800" %>  md:mt-2 lg:mt-0">
+          <i x-cloak x-show="<%= @total_pnl_percentage %> >= 0" class="fa-solid fa-arrow-up text-green-500 mr-1"></i>
+          <i x-cloak x-show="<%= @total_pnl_percentage %> < 0" class="fa-solid fa-arrow-down text-red-500 mr-1"></i>
+          <span class="sr-only"> Decreased by </span>
+          <%= @total_pnl_percentage.round(2) %>%
+        </div>
+      </dd>
+    </div>
+  </dl>
+</div>
