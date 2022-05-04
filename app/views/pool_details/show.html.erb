@@ -101,11 +101,11 @@
       <%= area_chart @pool_tvl_hash, adapter: "highcharts" %>
     </div>
 
-    <div class="mt-8">
+    <div class="mt-8" x-show="'<%= @chart_type %>' == 'base-pool-apy'">
       <%= area_chart @base_pool_apy_hash, adapter: "highcharts" %>
     </div>
 
-    <div class="mt-8" >
+    <div class="mt-8" x-show="'<%= @chart_type %>' == 'base-pool-tvl'">
       <%= area_chart @base_pool_tvl_hash, adapter: "highcharts" %>
     </div>
   </div>
