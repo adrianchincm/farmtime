@@ -19,6 +19,8 @@ class PoolDetailsController < ApplicationController
     @pool_price_hash = {}
     @pool_apy_hash = {}
     @pool_tvl_hash = {}
+    @base_pool_apy_hash = {}
+    @base_pool_tvl_hash = {}
 
     pool_dailies.each do |daily|
       @pool_price_hash[daily.created_at] = daily.current_price
@@ -54,7 +56,12 @@ class PoolDetailsController < ApplicationController
   end
 
   def get_tvl_apr_hash
-    if @pool.pool_stat.coindix_id.nil?
+    if !@pool.vault_provider.nil?
+      pool_farmtime_id = PoolStat.find_by(tokens: @pool.tokens, vault_provider: @pool.vault_provider).farmtime_id
+      pool_stat_dailies = PoolStatDaily.where(farmtime_id: pool_farmtime_id)
+      check_for_base_pool_stat_dailies
+      
+    elsif @pool.pool_stat.coindix_id.nil?
       pool_farmtime_id = @pool.pool_stat.farmtime_id
       pool_stat_dailies = PoolStatDaily.where(farmtime_id: pool_farmtime_id)
     else
@@ -67,6 +74,19 @@ class PoolDetailsController < ApplicationController
       @pool_tvl_hash[daily.created_at] = daily.tvl
     end
   end
+
+  def check_for_base_pool_stat_dailies
+    if !@pool.pool_stat.coindix_id.nil?
+      pool_coindix_id = @pool.pool_stat.coindix_id
+      base_pool_stat_dailies = PoolStatDaily.where(coindix_id: pool_coindix_id)
+    end
+
+    base_pool_stat_dailies.each do |daily|
+      @base_pool_apy_hash[daily.created_at] = "#{daily.apy}%"
+      @base_pool_tvl_hash[daily.created_at] = daily.tvl
+    end
+    
+  end  
 
   def pnl_percentage_apy_7d_average(pool_stats)
     ((pool_stats.apr - pool_stats.apy_7d_average) / pool_stats.apr) * 100
