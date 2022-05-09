@@ -1,4 +1,4 @@
-<div x-data="{ show_base_pool: false, show_dropdown: false }" class="relative text-center px-4 py-8 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 h-screen">
+<div x-data="{ show_base_pool: false, show_dropdown: false }" data-controller="pool-details" data-pool-details-portfolio-id-value="<%= @portfolio_id %>" data-pool-details-pool-id-value="<%= @pool_id %>" class="relative text-center px-4 py-8 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 h-screen">
   <div class="flex justify-between mb-4 sm:mb-0 text-left text-l items-center">
   <a href="/portfolio/<%= @portfolio_name %>" class="flex mb-4 sm:mb-0 text-left text-blue-800 text-l items-center">
     <i class="fa-solid fa-arrow-left-long"></i>
@@ -17,9 +17,8 @@
     </button>
   </div>
   <div x-cloak x-show="show_dropdown" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-    <div class="py-1" role="none">
-      <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-      <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Set pool as inactive</a>     
+    <div class="py-1 " role="none">      
+      <button data-action="click->pool-details#setInactive" data-pool-details-target="active" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Set pool as inactive</button>
     </div>
   </div>
 </div>

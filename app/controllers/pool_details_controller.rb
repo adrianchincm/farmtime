@@ -10,10 +10,12 @@ class PoolDetailsController < ApplicationController
   end
 
   def show
+    puts"DOMAIN : #{request.domain}"
     @chart_type = params[:chart] ||= 'value'
     @portfolio_name = params[:name]
-    @pool_id = params[:pool_id]
+    @pool_id = params[:pool_id]    
     portfolio = Portfolio.find_by(name: @portfolio_name)
+    @portfolio_id = portfolio.id
 
     @pool = Pool.find_by(id: @pool_id, portfolio_id: portfolio.id)
     @previous_daily = PreviousDailyProvider.call(@pool_id, portfolio.id)
