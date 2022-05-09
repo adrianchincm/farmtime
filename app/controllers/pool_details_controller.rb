@@ -3,6 +3,12 @@
 class PoolDetailsController < ApplicationController
   helper_method :get_total_pnl_amount
 
+  def active
+    @portfolio_name = params[:name]
+    @pool_id = params[:pool_id]
+    render json: Pool.find(@pool_id)
+  end
+
   def show
     @chart_type = params[:chart] ||= 'value'
     @portfolio_name = params[:name]
