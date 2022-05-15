@@ -6,7 +6,10 @@ class PoolDetailsController < ApplicationController
   def active
     @portfolio_name = params[:name]
     @pool_id = params[:pool_id]
-    render json: Pool.find(@pool_id)
+    pool = Pool.find(@pool_id)
+    pool.is_active = !pool.is_active
+    pool.save
+    render json: pool
   end
 
   def show

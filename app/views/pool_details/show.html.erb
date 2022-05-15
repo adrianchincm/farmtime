@@ -1,30 +1,32 @@
 <div x-data="{ show_base_pool: false, show_dropdown: false }" data-controller="pool-details" data-pool-details-portfolio-id-value="<%= @portfolio_id %>" data-pool-details-pool-id-value="<%= @pool_id %>" class="relative text-center px-4 py-8 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 h-screen">
   <div class="flex justify-between mb-4 sm:mb-0 text-left text-l items-center">
-  <a href="/portfolio/<%= @portfolio_name %>" class="flex mb-4 sm:mb-0 text-left text-blue-800 text-l items-center">
-    <i class="fa-solid fa-arrow-left-long"></i>
-    <div class="ml-2 hover:underline">Back to portfolio</div>
-  </a>
-
-  <!-- This example requires Tailwind CSS v2.0+ -->
-<div class="relative inline-block text-left">
-  <div>
-    <button @click="show_dropdown = !show_dropdown" @click.away="show_dropdown = false" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
-      Options
-      <!-- Heroicon name: solid/chevron-down -->
-      <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-      </svg>
-    </button>
-  </div>
-  <div x-cloak x-show="show_dropdown" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
-    <div class="py-1 " role="none">      
-      <button data-action="click->pool-details#setInactive" data-pool-details-target="active" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Set pool as inactive</button>
+    <a href="/portfolio/<%= @portfolio_name %>" class="flex mb-4 sm:mb-0 text-left text-blue-800 text-l items-center">
+      <i class="fa-solid fa-arrow-left-long"></i>
+      <div class="ml-2 hover:underline">Back to portfolio</div>
+    </a>
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <div class="relative inline-block text-left">
+      <div>
+        <button @click="show_dropdown = !show_dropdown" @click.away="show_dropdown = false" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500" id="menu-button" aria-expanded="true" aria-haspopup="true">
+          Options
+          <!-- Heroicon name: solid/chevron-down -->
+          <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+      <div x-cloak x-show="show_dropdown" data-action="click->pool-details#setInactive" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+        <div class="py-1" role="none" >
+          <button data-pool-details-target="active" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Set pool as <%= @pool.is_active ? "inactive" : "active" %></button>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
-  </div>
-
+  <% unless @pool.is_active %>
+    <div class="my-2">
+      <%= render 'inactive_pool_banner' %>
+    </div>
+  <% end %>
   <h3 class="text-lg leading-6 font-medium text-gray-900 mb-2"><%= @pool.name %> Pool</h3>
   <div class="flex items-center justify-center" x-data="{profit: <%= @previous_daily_pnl_amount >= 0 %>}">
     <div class="text-blue-500 font-medium text-6xl"><%= number_to_currency(@pool.current_price) %></div>
@@ -38,7 +40,7 @@
     </div>
   </div>
   <% unless @base_pool_stats.nil? %>
-  <%= render 'show_base_pool_stats' %>
+    <%= render 'show_base_pool_stats' %>
   <% end %>
   <%= render 'stats_card' %>
   <div x-data="{}">
@@ -55,11 +57,9 @@
     <div class="mt-8" x-show="'<%= @chart_type %>' == 'tvl'">
       <%= area_chart @pool_tvl_hash, adapter: "highcharts" %>
     </div>
-
     <div class="mt-8" x-show="'<%= @chart_type %>' == 'base-pool-apy'">
       <%= area_chart @base_pool_apy_hash, adapter: "highcharts" %>
     </div>
-
     <div class="mt-8" x-show="'<%= @chart_type %>' == 'base-pool-tvl'">
       <%= area_chart @base_pool_tvl_hash, adapter: "highcharts" %>
     </div>

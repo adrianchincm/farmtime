@@ -16,6 +16,11 @@ export default class extends Controller {
       .then(res => {
         const result = res.data;
         console.log(result)
+        document.location.reload(true)
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
       })
   }
 }
