@@ -1,4 +1,4 @@
-<div class="relative px-4 py-8 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 h-screen">
+<div x-data="{show_inactive_pools: false}" class="relative px-4 py-8 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 h-screen">
   <div class="flex items-end justify-between mb-8">
     <div class="text-4xl font-bold text-black"><%= @portfolio.name %></div>
     <div>
@@ -16,8 +16,16 @@
       <circle fill-opacity="0.3" fill="currentColor" cx="44" cy="44" r="29.5"></circle>
       <circle fill-opacity="0.3" fill="currentColor" cx="44" cy="44" r="22.5"></circle>
     </svg>
-  </div>
+  </div>  
   <div class="relative grid gap-5 pb-6 sm:grid-cols-2 lg:grid-cols-4">
-    <%= render @pools %>
+    <%= render @pools %>    
   </div>
+  <div class="relative pb-4">
+    <%= render 'show_inactive_pools_switch' %>
+  </div>
+  <div x-cloak x-show="show_inactive_pools" class="relative grid gap-5 pb-6 sm:grid-cols-2 lg:grid-cols-4">
+    <%= render @inactive_pools %>    
+  </div>
+  
 </div>
+
