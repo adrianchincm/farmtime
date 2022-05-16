@@ -1,5 +1,8 @@
 <a href="/portfolio/<%= @portfolio.name %>/pool/<%= pool.id %>" class="flex flex-col justify-between  text-left transition-shadow duration-200 bg-white rounded shadow-xl group hover:shadow-2xl">
   <div class="p-5" data-action="click->hello#showHideDetails">
+    <% unless pool.is_active %>
+      <div class="inline-block bg-red-600 text-white rounded-lg p-2 font-bold mb-2">INACTIVE</div>
+    <% end %>
     <div x-data="{is_vault_pool: <%= !pool.vault_provider.nil? %>}" class="flex">
       <div class="mb-2 text-sm font-bold text-black"><%= pool.name %></div>
       <div class="ml-2 mb-2 text-sm font-bold text-blue-500"><%= pool.pool_owner %></div>

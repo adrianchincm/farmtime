@@ -3,7 +3,7 @@ class PortfolioController < ApplicationController
         portfolio_name = params[:name]
         @portfolio = Portfolio.find_by(name: portfolio_name)
         
-        @pools = Pool.where(portfolio_id: @portfolio.id).sort_by(&:pool_owner)
+        @pools = Pool.where(portfolio_id: @portfolio.id, is_active: true).sort_by(&:pool_owner)
         @portfolio_total = @pools.sum(&:current_price)
     end
 end
