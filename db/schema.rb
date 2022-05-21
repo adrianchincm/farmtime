@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_04_144858) do
+ActiveRecord::Schema.define(version: 2022_05_21_082133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -90,6 +90,8 @@ ActiveRecord::Schema.define(version: 2022_05_04_144858) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
+    t.string "binance_api_key"
+    t.string "binance_secret_key"
   end
 
 end
