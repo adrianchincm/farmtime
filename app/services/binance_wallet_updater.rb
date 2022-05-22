@@ -10,10 +10,11 @@ class BinanceWalletUpdater < ApplicationService
 
   def call
     client = Binance::Spot.new(key: @portfolio.binance_api_key, secret: @portfolio.binance_secret_key)
-    snapshot = client.account_snapshot(type: 'SPOT')[:snapshotVos].last
+    snapshot = client.account_snapshot(type: 'SPOT')[:snapshotVos].last    
     
     wallet = Wallet.find(@portfolio.binance_wallet_id)
-    wallet.last_updated = Time.at(snapshot[:updateTime]/1000)
+    wallet.last_updated = Time.at(snapshot[:updateTime]/1000)    
+    wallet.total_amount = snapshot[:data][:totalAssetOfBtc].to_f * Coin.find_by(symbol: 'Btc').price
     wallet.save
 
     filtered_balances = snapshot[:data][:balances].select { |token| WHITELISTED_TOKENS.include?(token[:asset]) }    
