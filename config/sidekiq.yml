@@ -30,5 +30,5 @@ production:
     cron: "0 16 * * *"  
     class: SnapSevenDayAverage
   update_wallets:
-     cron: "0 16 * * *"
-    class: UpdateWallets  
+    cron: "0 16 * * *"
+    class: UpdateWallets
