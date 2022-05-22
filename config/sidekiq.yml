@@ -29,3 +29,6 @@ production:
   snap_seven_day_average:
     cron: "0 16 * * *"  
     class: SnapSevenDayAverage
+  update_wallets:
+     cron: "0 16 * * *"
+    class: UpdateWallets  

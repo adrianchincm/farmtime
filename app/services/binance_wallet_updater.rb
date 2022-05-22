@@ -1,30 +1,28 @@
 # frozen_string_literal: true
 require 'openssl'
+require 'binance'
 
 class BinanceWalletUpdater < ApplicationService
+  WHITELISTED_TOKENS = %w[BETH BTC ETH USDT].freeze
   def initialize(portfolio)
     @portfolio = portfolio
   end
 
   def call
-    timestamp = DateTime.now.strftime('%Q')
-    yesterday_timestamp = (DateTime.now - 1.days).strftime('%Q')
-    query_string = "type=SPOT&timestamp=#{timestamp}"
-    savings_query_string = "timestamp=#{timestamp}"
-    secret = @portfolio.binance_secret_key
-    signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), secret, query_string)
-    savings_signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest.new('sha256'), secret, savings_query_string)
-
-    url =
-    "https://api.binance.com/sapi/v1/accountSnapshot?type=SPOT&timestamp=#{timestamp}&signature=#{signature}"
-    get_pool_response = HTTParty.get(url, headers: { 'X-MBX-APIKEY' => @portfolio.binance_api_key }).parsed_response
-    puts get_pool_response["snapshotVos"].last.to_json
-    puts "DATE : #{yesterday_timestamp}"
-
-    url =
-    "https://api.binance.com/sapi/v1/lending/daily/token/position?timestamp=#{timestamp}&signature=#{savings_signature}"
-    savings_wallet_response = HTTParty.get(url, headers: { 'X-MBX-APIKEY' => @portfolio.binance_api_key }).parsed_response
-    puts savings_wallet_response.to_json        
+    client = Binance::Spot.new(key: @portfolio.binance_api_key, secret: @portfolio.binance_secret_key)
+    snapshot = client.account_snapshot(type: 'SPOT')[:snapshotVos].last
     
+    wallet = Wallet.find(@portfolio.binance_wallet_id)
+    wallet.last_updated = Time.at(snapshot[:updateTime]/1000)
+    wallet.save
+
+    filtered_balances = snapshot[:data][:balances].select { |token| WHITELISTED_TOKENS.include?(token[:asset]) }    
+
+    filtered_balances.each do |token|
+      created_token = Token.find_or_initialize_by(symbol: token[:asset], wallet_id: wallet.id)
+      created_token.amount = token[:free]
+      created_token.coin_id = Coin.find_by(symbol: token[:asset].titlecase).id
+      created_token.save
+    end    
   end
 end

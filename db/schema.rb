@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_21_082133) do
+ActiveRecord::Schema.define(version: 2022_05_21_152700) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -92,6 +92,25 @@ ActiveRecord::Schema.define(version: 2022_05_21_082133) do
     t.string "name"
     t.string "binance_api_key"
     t.string "binance_secret_key"
+    t.integer "binance_wallet_id"
+  end
+
+  create_table "tokens", force: :cascade do |t|
+    t.integer "coin_id"
+    t.integer "wallet_id"
+    t.float "amount"
+    t.string "symbol"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "wallets", force: :cascade do |t|
+    t.string "wallet_type"
+    t.integer "portfolio_id"
+    t.float "total_amount"
+    t.datetime "last_updated", precision: 6
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end
