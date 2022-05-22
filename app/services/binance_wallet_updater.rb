@@ -3,7 +3,7 @@ require 'openssl'
 require 'binance'
 
 class BinanceWalletUpdater < ApplicationService
-  WHITELISTED_TOKENS = %w[BETH BTC ETH USDT].freeze
+  WHITELISTED_TOKENS = %w[BETH BTC ETH USDT USDC].freeze
   def initialize(portfolio)
     @portfolio = portfolio
   end
