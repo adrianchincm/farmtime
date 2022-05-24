@@ -16,16 +16,43 @@
       <circle fill-opacity="0.3" fill="currentColor" cx="44" cy="44" r="29.5"></circle>
       <circle fill-opacity="0.3" fill="currentColor" cx="44" cy="44" r="22.5"></circle>
     </svg>
-  </div>  
+  </div>
+  <div class="relative mb-6">
+    <div class="rounded-lg bg-gray-900 w-full">
+      <div class="flex">
+        <div class="h-12">
+        <%= image_tag 'binance.png', width: '200', class: "pt-8 pl-8" %>
+        </div>
+        <div class="mt-8 ml-12">
+        <div class="text-white">Wallet Total </div>
+        <div class="text-blue-500 text-xl"> <%= number_to_currency(@wallet.total_amount.round(2)) %></div>
+        </div>
+      </div>
+      <div class="px-4 sm:px-6 lg:px-8 pb-6">
+        <div class="-mx-4 mt-8 flex flex-col sm:-mx-6 md:mx-0">
+          <table class="min-w-full divide-y divide-gray-600">
+            <thead>
+              <tr>
+                <th scope="col" class="py-3.5 pl-12 pr-3 text-left text-sm font-semibold text-gray-400 sm:pl-6 md:pl-12">Token</th>
+                <th scope="col" class="py-3.5 px-3 text-center text-sm font-semibold text-gray-400 sm:table-cell">Price</th>
+                <th scope="col" class="hidden py-3.5 px-3 text-center text-sm font-semibold text-gray-400 sm:table-cell">Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%= render @wallet.tokens %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="relative grid gap-5 pb-6 sm:grid-cols-2 lg:grid-cols-4">
-    <%= render @pools %>    
+    <%= render @pools %>
   </div>
   <div class="relative pb-4">
     <%= render 'show_inactive_pools_switch' %>
   </div>
   <div x-cloak x-show="show_inactive_pools" class="relative grid gap-5 pb-6 sm:grid-cols-2 lg:grid-cols-4">
-    <%= render @inactive_pools %>    
+    <%= render @inactive_pools %>
   </div>
-  
 </div>
-

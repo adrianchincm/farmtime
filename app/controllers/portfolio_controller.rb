@@ -7,5 +7,7 @@ class PortfolioController < ApplicationController
         @pools = all_pools.select{ |pool| pool[:is_active] }
         @inactive_pools = all_pools.select{ |pool| !pool[:is_active] }
         @portfolio_total = @pools.sum(&:current_price)
+        @wallet = Wallet.find_by(portfolio_id: @portfolio.id, wallet_type: "Binance")
+        
     end
 end
