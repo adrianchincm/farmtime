@@ -6,8 +6,10 @@ class ScriptRunner < ApplicationService
 
   def call
     Wallet.create(wallet_type: "Binance", portfolio_id: Portfolio.second.id, total_amount: 12234.55,last_updated: Time.now())
+    port = Portfolio.second
+    port.binance_wallet_id = Wallet.second.id
+    port.save
     
-
     WHITELISTED_TOKENS.each do |token|
         Token.create(coin_id: Coin.find_by(symbol: token.titlecase).id, wallet_id: Wallet.second.id, amount: 1234.56, symbol: token)
     end  
