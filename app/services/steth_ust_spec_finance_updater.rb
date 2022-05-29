@@ -26,7 +26,7 @@ class StethUstSpecFinanceUpdater < ApplicationService
         headers: { 'Content-Type' => 'application/json' }).parsed_response
 
         url =
-        'https://lcd.terra.dev/wasm/contracts/terra12td8as6zhm3m9djjmpxzfue9syvrj0ewe070hf/store?query_msg=%7B%22reward_info%22:%7B%22staker_addr%22:%22terra1n5rkxxys26v0ks0yptp0a7v9wt5v3q85g4s4hq%22%7D%7D'
+        "https://lcd.terra.dev/wasm/contracts/terra12td8as6zhm3m9djjmpxzfue9syvrj0ewe070hf/store?query_msg=%7B%22reward_info%22:%7B%22staker_addr%22:%22#{@portfolio.terra_address}%22%7D%7D"
         get_spec_staked_lp_tokens = HTTParty.get(url).parsed_response
 
         user_lp_tokens = get_spec_staked_lp_tokens["result"]["reward_infos"][0]["auto_bond_amount"].to_f / 1000000

@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-require 'openssl'
 require 'binance'
 
 class BinanceWalletUpdater < ApplicationService
