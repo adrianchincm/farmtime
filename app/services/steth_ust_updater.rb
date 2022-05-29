@@ -25,8 +25,7 @@ class StethUstUpdater < ApplicationService
         'https://hive.terra.dev/graphql'
       get_user_lp_tokens = HTTParty.post(url, body: "{\"query\":\"{stakedterra1qz4cv5lsfw4k2266q52z9rtz64n58paxy9d476: wasm {\\n            contractQuery(\\n              contractAddress: \\\"terra1zgrx9jjqrfye8swykfgmd6hpde60j0nszzupp9\\\"\\n              query: {\\n                deposit: {\\n                  lp_token: \\\"terra1qz4cv5lsfw4k2266q52z9rtz64n58paxy9d476\\\"\\n                  user: \\\"#{@portfolio.terra_address}\\\"\\n                }\\n              }\\n            )\\n          }\\n}\",\"variables\":{}}",
       headers: { 'Content-Type' => 'application/json' }).parsed_response
-
-      puts "ERORR : #{get_user_lp_tokens["errors"].nil?}"
+      
       if get_user_lp_tokens["errors"].nil?
         user_lp_tokens = get_user_lp_tokens["data"]["stakedterra1qz4cv5lsfw4k2266q52z9rtz64n58paxy9d476"]["contractQuery"].to_f / 1000000        
         

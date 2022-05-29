@@ -5,8 +5,7 @@ class MissingDailyStatUpdater < ApplicationService
         @coindix_id = coindix_id
     end
   
-    def call
-        puts "COINDIX ID : #{@coindix_id}"
+    def call        
         latest_pool_stat = PoolStatDaily.where(coindix_id: @coindix_id).last        
 
         url = "https://api.coindix.com/vaults/#{@coindix_id}?period=365"        
