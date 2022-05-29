@@ -29,11 +29,13 @@ class LunaUstUpdater < ApplicationService
     getBondedLPTokens = HTTParty.get(url).parsed_response
     
     pool = getBondedLPTokens['coins'].select { |pool| pool["denom"] == 'gamm/pool/562' }
-    bondedTokens = pool[0]['amount'].to_f / 1_000_000_000_000_000_000    
+    if pool[0].present?
+      bondedTokens = pool[0]['amount'].to_f / 1_000_000_000_000_000_000    
 
-    luna_ust_value = bondedTokens * lpTokenValue
-    pool = Pool.find_by(portfolio_id: @portfolio.id, tokens: ["terra-luna", "terrausd"])
-    pool.current_price = luna_ust_value
-    pool.save
+      luna_ust_value = bondedTokens * lpTokenValue
+      pool = Pool.find_by(portfolio_id: @portfolio.id, tokens: ["terra-luna", "terrausd"])
+      pool.current_price = luna_ust_value
+      pool.save
+    end    
   end
 end

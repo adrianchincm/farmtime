@@ -1,5 +1,11 @@
 <div x-data="{show_inactive_pools: false}" class="relative px-4 py-8 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20 h-full">
-  <div class="flex items-end justify-between mb-8">
+    <% if @portfolio.name == "demo"%>
+      <a href="/" class="flex mb-4 sm:mb-0 text-left text-blue-800 text-l items-center">
+        <i class="fa-solid fa-arrow-left-long"></i>
+        <div class="ml-2 hover:underline">Back to landing page</div>
+      </a>
+    <% end %>
+  <div class="flex items-end justify-between mb-8">    
     <div class="text-4xl font-bold text-black"><%= @portfolio.name %></div>
     <div>
       <div class="text-gray-500">Portfolio Total</div>
@@ -21,11 +27,11 @@
     <div class="rounded-lg bg-gray-900 w-full">
       <div class="flex">
         <div class="h-12">
-        <%= image_tag 'binance.png', width: '200', class: "pt-8 pl-8" %>
+          <%= image_tag 'binance.png', width: '200', class: "pt-8 pl-8" %>
         </div>
         <div class="mt-8 ml-12">
-        <div class="text-white">Wallet Total </div>
-        <div class="text-blue-500 text-xl"> <%= number_to_currency(@wallet.total_amount.round(2)) %></div>
+          <div class="text-white">Wallet Total </div>
+          <div class="text-blue-500 text-xl"> <%= number_to_currency(@wallet.total_amount.round(2)) %></div>
         </div>
       </div>
       <div class="px-4 sm:px-6 lg:px-8 pb-6">
@@ -46,12 +52,12 @@
       </div>
     </div>
   </div>
-   <div class="relative mb-4">
-      <div class="text-gray-500">Farm Total</div>
-      <div class="text-4xl font-bold text-blue-500">
-        <%= number_to_currency(@farm_total) %>
-      </div>
+  <div class="relative mb-4">
+    <div class="text-gray-500">Farm Total</div>
+    <div class="text-4xl font-bold text-blue-500">
+      <%= number_to_currency(@farm_total) %>
     </div>
+  </div>
   <div class="relative grid gap-5 pb-6 sm:grid-cols-2 lg:grid-cols-4">
     <%= render @pools %>
   </div>

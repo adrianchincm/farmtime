@@ -23,10 +23,12 @@ class CoindixStatsUpdater < ApplicationService
 
         vault_response = HTTParty.get(url, headers: { "Authorization" => "Bearer 2bf7194308fca6bc77e14d43d3d3e555c2d6bda9", "User-Agent" => "PostmanRuntime/7.29.0" }).parsed_response
 
-        pool_stat = PoolStat.find_by(coindix_id: vault)
-        pool_stat.tvl = vault_response["tvl"]
-        pool_stat.apr = vault_response["apy"] * 100
-        pool_stat.save
+        if vault_response["message"] != "not_exist"
+          pool_stat = PoolStat.find_by(coindix_id: vault)
+          pool_stat.tvl = vault_response["tvl"]
+          pool_stat.apr = vault_response["apy"] * 100
+          pool_stat.save
+        end        
       end
 
     end

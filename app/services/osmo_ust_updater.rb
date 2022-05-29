@@ -29,13 +29,15 @@ class OsmoUstUpdater < ApplicationService
       getBondedLPTokens = HTTParty.get(url).parsed_response
       
       pool = getBondedLPTokens['coins'].select { |pool| pool["denom"] == 'gamm/pool/560' }
-      bondedTokens = pool[0]['amount'].to_f / 1_000_000_000_000_000_000      
+      if pool[0].present?
+        bondedTokens = pool[0]['amount'].to_f / 1_000_000_000_000_000_000      
   
-      osmo_ust_value = bondedTokens * lpTokenValue
-      
-      pool = Pool.find_by(portfolio_id: @portfolio.id, tokens: ["osmosis", "terrausd"])
-      pool.current_price = osmo_ust_value
-      pool.save
+        osmo_ust_value = bondedTokens * lpTokenValue
+        
+        pool = Pool.find_by(portfolio_id: @portfolio.id, tokens: ["osmosis", "terrausd"])
+        pool.current_price = osmo_ust_value
+        pool.save
+      end      
     end
   end
   
